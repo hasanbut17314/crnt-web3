@@ -1982,8 +1982,11 @@ label {
 }
 
 .chart-content-inner p:nth-last-child() {
-  color: #a4b4c3;
   margin-bottom: 45px;
+}
+
+.chart-content-inner p {
+  color: rgb(197, 193, 193);
 }
 
 .chart-content-inner .btn {
