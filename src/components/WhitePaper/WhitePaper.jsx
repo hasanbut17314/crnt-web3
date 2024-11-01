@@ -49,7 +49,7 @@ const WhitePaper = () => {
                   <a
                     className="btn btn-two"
                     href={
-                      "https://drive.google.com/file/d/1nLiV3mbFJT1WCqOqKWHvIFbD9lPMapfc/view"
+                      "https://drive.google.com/file/d/1nOXMauzD7ToAc8Qy6wef8o1tvgaZSsiy/view"
                     }
                     target="_blank"
                   >

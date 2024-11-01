@@ -3,7 +3,7 @@ exports.rpc = "https://eth-sepolia.g.alchemy.com/v2/OgNRbpQ5JA5B414MwzN7ttUEr2r1
 exports.usdtAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF"
 exports.busdAddress = "0x788Fe6d9830D3888Ef868971480EdA178224d219"
 exports.ProjectId = '38c3d7187f96bd6a5f1ca305ebfc5ad7'
-exports.pdflink = "1nLiV3mbFJT1WCqOqKWHvIFbD9lPMapfc"
+exports.pdflink = "1nOXMauzD7ToAc8Qy6wef8o1tvgaZSsiy"
 
 exports.usdAbi = [
     {
