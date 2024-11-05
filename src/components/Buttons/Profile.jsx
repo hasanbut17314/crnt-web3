@@ -27,7 +27,7 @@ const Profile = ({ data }) => {
         <Modal.Body>
           <div className="team-item team-item-two">
             <div className="profile-img">
-              <img src={data.src} alt={data.name} />
+              <img src={data.src} alt={data.name}/>
             </div>
             <div className="team-content">
               <h2 className="title">{data.name}</h2>

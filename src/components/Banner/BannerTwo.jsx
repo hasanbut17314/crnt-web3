@@ -33,6 +33,7 @@ const BannerTwo = () => {
   useEffect(() => {
     calculateAmountRaised();
   });
+ 
 
   return (
     <section className="banner-area-two" id="home">
@@ -118,11 +119,18 @@ const BannerTwo = () => {
                 </div>
               </div>
 
-              <div style={{ height: 200 }}></div>
+              <div style={{ height: 200 }}>
+              </div>
+              
+
+              
             </div>
           </div>
         </div>
       </div>
+      
+      
+      
       <div className="banner-social-wrap">
         <ul>
           <li>

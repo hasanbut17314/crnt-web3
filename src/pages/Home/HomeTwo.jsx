@@ -26,6 +26,7 @@ import About3 from "../../components/About/About3";
 import Distribution from "../../components/Distribution/Distribution";
 import About4 from "../../components/About/About4";
 import Distribution2 from "../../components/Distribution/Distribution2";
+import Staking from "../../components/Staking/Staking";
 
 const HomeTwo = () => {
   const { isLoading } = useContext(IcoContext);
@@ -34,6 +35,7 @@ const HomeTwo = () => {
     <LayoutTwo>
       <main>
         <BannerTwo />
+        <Staking/>
         {/* <Banner /> */}
         <CountDownTwo />
         <WhyChooseUsTwo />
