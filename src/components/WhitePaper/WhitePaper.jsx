@@ -73,10 +73,11 @@ const WhitePaper = () => {
                   />
                 </Modal> */}
                   <a
-                    href={`https://drive.google.com/uc?export=download&id=${pdflink}`}
+                    href={`https://drive.google.com/file/d/1PWoS-GlNsGOClRsu6gCiq9_klTfp2yBY/view?usp=drivesdk`}
                     download={"CRNT Whitepaper"}
                     className="btn btn-two"
                     style={{ marginLeft: "5px" }}
+                    target="_blank"
                   >
                     Download Doc
                   </a>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import Tabs from "./Tabs";
 import ToggleButton from "./ToggleButton";
-import Web3 from 'web3';
+
 import { AiOutlineClose } from "react-icons/ai";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { Link } from "react-router-dom";
 import IcoAbi from '../../contractabi/ICO.json'
-
+const { Web3 } = require('web3');
 const web3 = new Web3(window.ethereum);
 
 
@@ -54,7 +54,7 @@ const BuyNow = (props) => {
 
   const handleBuy = async (activeTab, amount) => {
     try {
-      const contractAddress = process.env.contractAddress
+      const contractAddress = process.env.icoAddress
       const contract = new web3.eth.Contract(IcoAbi, contractAddress);
       const accounts = await web3.eth.getAccounts();
       const userAccount = accounts[0];
