@@ -3,12 +3,18 @@ import img01 from "../../assets/img/team/h2_team_img01.jpg";
 import img02 from "../../assets/img/team/h2_team_img02.jpg";
 import img03 from "../../assets/img/team/h2_team_img03.jpg";
 import img04 from "../../assets/img/team/h2_team_img04.jpg";
+import img05 from "../../assets/img/team/h2_team_img05.jpeg"
+import img06 from "../../assets/img/team/h2_team_img06.jpeg"
+import img07 from "../../assets/img/team/h2_team_img07.jpeg"
+import img08 from "../../assets/img/team/h2_team_img08.jpeg"
+
 import TeamTwoItem from "./TeamTwoItem";
 import Profile from "./../Buttons/Profile";
 import ScrollAnimation from "react-animate-on-scroll";
 
 const TeamTwo = () => {
   const team_members = [
+
     {
       src: img01,
       name: "Ali Demir",
@@ -21,17 +27,30 @@ const TeamTwo = () => {
       designation: "Project Manager (Development & Marketing)",
       desc: "Muhammad Ibtesam Asif, an experienced Project Manager (Development & Marketing), brings a wealth of expertise in software development, marketing, and project management. His exceptional leadership skills and visionary mindset drive innovation and ensure successful project execution.",
     },
+    
+    {
+      src: img08,
+      name: "Yulia Grace ",
+      designation: "The Gaming Innovator",
+      desc: "Monica Taylor, our skilled Public Relations Officer, manages our project's reputation and communication. With her expertise and strategic approach, Monica crafts compelling narratives, engages stakeholders, and enhances our brand presence.",
+    },
+    {
+      src: img05,
+      name: "Jessica McCarty",
+      designation: "Marketing",
+      desc: "Abdullah Al Qarni, our esteemed project advisor, brings a wealth of experience and expertise to the table. With his extensive background in the industry, he has consistently provided valuable guidance and strategic insights to drive project success.",
+    },
+    {
+      src: img06,
+      name: "Matej Novak",
+      designation: "Public relations officer",
+      desc: "Monica Taylor, our skilled Public Relations Officer, manages our project's reputation and communication. With her expertise and strategic approach, Monica crafts compelling narratives, engages stakeholders, and enhances our brand presence.",
+    },
     {
       src: img03,
       name: "Abdullah al qarni",
       designation: "Advisor",
       desc: "Abdullah Al Qarni, our esteemed project advisor, brings a wealth of experience and expertise to the table. With his extensive background in the industry, he has consistently provided valuable guidance and strategic insights to drive project success.",
-    },
-    {
-      src: img04,
-      name: "Monica Taylor ",
-      designation: "Public relations officer",
-      desc: "Monica Taylor, our skilled Public Relations Officer, manages our project's reputation and communication. With her expertise and strategic approach, Monica crafts compelling narratives, engages stakeholders, and enhances our brand presence.",
     },
   ];
 
@@ -50,9 +69,9 @@ const TeamTwo = () => {
           </div>
         </div>
 
-        <div className="row justify-content-center" >
+        <div className="row  flex-nowrap  px-5 scroll-x"   >
           {team_members.map((x, index) => (
-            <div key={index} className="col-lg-3 col-md-4 col-sm-6" >
+            <div key={index} className="col-lg-3 col-md-4 col-sm-6 flex-shrink-0" >
               <Profile data={x} />
             </div>
           ))}

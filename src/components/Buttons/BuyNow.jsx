@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import Tabs from "./Tabs";
 import ToggleButton from "./ToggleButton";
+
 import { AiOutlineClose } from "react-icons/ai";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,6 +15,11 @@ import { icoAbi, icoAddress } from "../../utils/constants";
 import { useEffect } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { Link } from "react-router-dom";
+import IcoAbi from '../../contractabi/ICO.json'
+const { Web3 } = require('web3');
+const web3 = new Web3(window.ethereum);
+
+
 
 const tabs = [
   { label: "USDT", value: "usdt", icon: "/images/icons/usdt.png" },
@@ -46,155 +52,169 @@ const BuyNow = (props) => {
     setActiveTab(tab);
   };
 
-  const handleBuy = async (activeTab, hasReferral) => {
+  const handleBuy = async (activeTab, amount) => {
     try {
+      const contractAddress = process.env.icoAddress
+      const contract = new web3.eth.Contract(IcoAbi, contractAddress);
+      const accounts = await web3.eth.getAccounts();
+      const userAccount = accounts[0];
+
       if (activeTab.value == "usdt") {
+        const stablecoinAddress = process.env.USDTADDRRESS
+        const tx = await contract.methods.buyTokens(amount, stablecoinAddress).send({ from: userAccount });
+        console.log('Transaction successful:', tx)
+
         // console.log(hasReferral);
-        if (hasReferral) {
-          if (referralCode == "" || referralCode.length != 66) {
-            toast.error("Provide a Valid Referral Code", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-          } else {
-            // console.log("buying with referraall");
+        // if (hasReferral) {
+        //   if (referralCode == "" || referralCode.length != 66) {
+        //     toast.error("Provide a Valid Referral Code", {
+        //       position: "top-center",
+        //       autoClose: 3000,
+        //       hideProgressBar: true,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //     });
+        //   } else {
+        //     // console.log("buying with referraall");
 
-            if (dollarAmount <= 0 || dollarAmount == "") {
-              toast.error(`Enter Valid ${activeTab.value} Amount`, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
-            } else {
-              // console.log("buying with usdt with referral code");
-              await buyWithUsdt(1, dollarAmount, referralCode);
+        //     if (dollarAmount <= 0 || dollarAmount == "") {
+        //       toast.error(`Enter Valid ${activeTab.value} Amount`, {
+        //         position: "top-center",
+        //         autoClose: 3000,
+        //         hideProgressBar: true,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+        //       });
+        //     } else {
+        //       // console.log("buying with usdt with referral code");
+        //       await buyWithUsdt(1, dollarAmount, referralCode);
 
-              toast.success("Success", {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
-              handleClose();
-            }
-          }
-        } else {
-          if (dollarAmount <= 0 || dollarAmount == "") {
-            toast.error(`Enter Valid ${activeTab.value} Amount`, {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-          } else {
-            // console.log("buying with usdt withoutt referral code");
+        //       toast.success("Success", {
+        //         position: "top-center",
+        //         autoClose: 3000,
+        //         hideProgressBar: true,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+        //       });
+        //       handleClose();
+        //     }
+        //   }
+        // } else {
+        //   if (dollarAmount <= 0 || dollarAmount == "") {
+        //     toast.error(`Enter Valid ${activeTab.value} Amount`, {
+        //       position: "top-center",
+        //       autoClose: 3000,
+        //       hideProgressBar: true,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //     });
+        //   } else {
+        //     // console.log("buying with usdt withoutt referral code");
 
-            await buyWithUsdt(
-              0,
-              dollarAmount,
-              "0x0000000000000000000000000000000000000000000000000000000000000000"
-            );
+        //     await buyWithUsdt(
+        //       0,
+        //       dollarAmount,
+        //       "0x0000000000000000000000000000000000000000000000000000000000000000"
+        //     );
 
-            toast.success("Success", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-            handleClose();
-          }
-          // console.log("no referral");
-        }
+        //     toast.success("Success", {
+        //       position: "top-center",
+        //       autoClose: 3000,
+        //       hideProgressBar: true,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //     });
+        //     handleClose();
+        //   }
+        //   // console.log("no referral");
+        // }
       } else {
-        if (hasReferral) {
-          if (referralCode == "" || referralCode.length != 66) {
-            toast.error("Provide a Referral Code", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-          } else {
-            // console.log("buying with referraall busd");
-            if (dollarAmount <= 0) {
-              toast.error(`Enter Valid ${activeTab.value} Amount`, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
-            } else {
-              // console.log("buying with busd with referral code");
+        const stablecoinAddress = process.env.BUSDADDRESS
+        const tx = await contract.methods.buyTokens(amount, stablecoinAddress).send({ from: userAccount });
+        console.log('Transaction successful:', tx)
 
-              await buyWithBusd(1, dollarAmount, referralCode);
-              toast.success("Success", {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
-              handleClose();
-            }
-          }
-        } else {
-          if (dollarAmount <= 0) {
-            toast.error(`Enter Valid ${activeTab.value} Amount`, {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-          } else {
-            // console.log("buying with busd without referral code");
 
-            await buyWithBusd(
-              0,
-              dollarAmount,
-              "0x0000000000000000000000000000000000000000000000000000000000000000"
-            );
-            toast.success("Success", {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-            handleClose();
-          }
-          // console.log("no referral");
-        }
+        // if (hasReferral) {
+        //   if (referralCode == "" || referralCode.length != 66) {
+        //     toast.error("Provide a Referral Code", {
+        //       position: "top-center",
+        //       autoClose: 3000,
+        //       hideProgressBar: true,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //     });
+        //   } else {
+        //     // console.log("buying with referraall busd");
+        //     if (dollarAmount <= 0) {
+        //       toast.error(`Enter Valid ${activeTab.value} Amount`, {
+        //         position: "top-center",
+        //         autoClose: 3000,
+        //         hideProgressBar: true,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+        //       });
+        //     } else {
+        //       // console.log("buying with busd with referral code");
+
+        //       await buyWithBusd(1, dollarAmount, referralCode);
+        //       toast.success("Success", {
+        //         position: "top-center",
+        //         autoClose: 3000,
+        //         hideProgressBar: true,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+        //       });
+        //       handleClose();
+        //     }
+        //   }
+        // } else {
+        //   if (dollarAmount <= 0) {
+        //     toast.error(`Enter Valid ${activeTab.value} Amount`, {
+        //       position: "top-center",
+        //       autoClose: 3000,
+        //       hideProgressBar: true,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //     });
+        //   } else {
+        //     // console.log("buying with busd without referral code");
+
+        //     await buyWithBusd(
+        //       0,
+        //       dollarAmount,
+        //       "0x0000000000000000000000000000000000000000000000000000000000000000"
+        //     );
+        //     toast.success("Success", {
+        //       position: "top-center",
+        //       autoClose: 3000,
+        //       hideProgressBar: true,
+        //       closeOnClick: true,
+        //       pauseOnHover: true,
+        //       draggable: true,
+        //       progress: undefined,
+        //     });
+        //     handleClose();
+        //   }
+        //   // console.log("no referral");
+        // }
       }
     } catch (err) {
       const errormessage = err.toString();
@@ -351,7 +371,7 @@ const BuyNow = (props) => {
               <button
                 className="btn btn-two pu"
                 onClick={() => {
-                  handleBuy(activeTab, hasReferral);
+                  handleBuy(activeTab, dollarAmount);
                 }}
               >
                 Purchase Tokens

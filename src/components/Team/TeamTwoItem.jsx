@@ -4,7 +4,7 @@ const TeamTwoItem = (props) => {
   return (
     <div className="team-item team-item-two wow fadeInUp" data-wow-delay=".2s">
       <div className="team-thumb">
-        <img src={props.item.src} alt={props.item.name} />
+        <img src={props.item.src} alt={props.item.name} style={{ width: '250px', height: '250px' }} />
       </div>
       <div className="team-content">
         <h2 className="title">{props.item.name}</h2>
