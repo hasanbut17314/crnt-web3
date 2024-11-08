@@ -3,10 +3,15 @@ import Countdown from "react-countdown";
 import { useContext } from "react";
 import { IcoContext } from "../../contexts/context";
 import moment from "moment/moment";
+import ScrollAnimation from "react-animate-on-scroll";
 
 const CountDownTwo = () => {
   const { currentStage, preSaleStartTime, publicSaleStartTime } =
     useContext(IcoContext);
+
+    console.log(publicSaleStartTime,'puvlicSaleStart')
+
+    // console.log(currentStage,'currentStage')
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -45,8 +50,12 @@ const CountDownTwo = () => {
       );
     }
   };
+  const stages = {
+
+  }
 
   return (
+    <ScrollAnimation animateIn="fadeInUp">
     <section id="countdown" className="countdown-area-two">
       <div className="container custom-container-four">
         <div className="row">
@@ -70,12 +79,19 @@ const CountDownTwo = () => {
                         renderer={renderer}
                       />
                     )
-                  : currentStage == 3
+                  : true
                   ? publicSaleStartTime && (
+                    <> 
+                    <div style={{ backgroundColor: '#fcfcfc', padding: '20px',  borderRadius: '8px', color: 'white', border: '2px solid #eb9e23' }}>
+                       <h2 className="title" style={{ marginBottom: '8px' }}>token raised </h2>
+                       <p >44280000000000000000000000 </p>
+
+                     </div>
                       <Countdown
-                        date={moment.unix(publicSaleStartTime + 1296000)}
+                        date={Date.now() + 10000 }
                         renderer={renderer}
                       />
+                      </>
                     )
                   : ""}
               </div>
@@ -84,6 +100,7 @@ const CountDownTwo = () => {
         </div>
       </div>
     </section>
+    </ScrollAnimation>
   );
 };
 
