@@ -3,10 +3,15 @@ import Countdown from "react-countdown";
 import { useContext } from "react";
 import { IcoContext } from "../../contexts/context";
 import moment from "moment/moment";
+import ScrollAnimation from "react-animate-on-scroll";
 
 const CountDownTwo = () => {
   const { currentStage, preSaleStartTime, publicSaleStartTime } =
     useContext(IcoContext);
+
+    console.log(publicSaleStartTime,'puvlicSaleStart')
+
+    // console.log(currentStage,'currentStage')
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -45,9 +50,13 @@ const CountDownTwo = () => {
       );
     }
   };
+  const stages = {
+
+  }
 
   return (
-    <section id="countdown" className="countdown-area-two">
+    <ScrollAnimation animateIn="fadeInUp">
+    <section id="countdown" style={{ marginBottom: '90px' }}>
       <div className="container custom-container-four">
         <div className="row">
           <div className="col-lg-12">
@@ -70,12 +79,19 @@ const CountDownTwo = () => {
                         renderer={renderer}
                       />
                     )
-                  : currentStage == 3
+                  : true
                   ? publicSaleStartTime && (
+                    <> 
+                    <div style={{ backgroundColor: '#041235', padding: '30px 50px', borderRadius:'20px', textAlign:'center' }}>
+                       <h5 className="title" style={{ marginBottom: '8px', color:'white'}}>token raised </h5>
+                       <p style={{color:'wheat'}} >44280000 </p>
+
+                     </div>
                       <Countdown
-                        date={moment.unix(publicSaleStartTime + 1296000)}
+                        date={Date.now() + 10000 }
                         renderer={renderer}
                       />
+                      </>
                     )
                   : ""}
               </div>
@@ -84,6 +100,7 @@ const CountDownTwo = () => {
         </div>
       </div>
     </section>
+    </ScrollAnimation>
   );
 };
 

@@ -35,9 +35,9 @@ const HomeTwo = () => {
     <LayoutTwo>
       <main>
         <BannerTwo />
-        <Staking/>
         {/* <Banner /> */}
         <CountDownTwo />
+        <Staking/>
         <WhyChooseUsTwo />
         <About />
         <Distribution />

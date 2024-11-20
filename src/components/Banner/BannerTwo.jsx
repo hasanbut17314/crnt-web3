@@ -33,6 +33,7 @@ const BannerTwo = () => {
   useEffect(() => {
     calculateAmountRaised();
   });
+
  
 
   return (
@@ -121,9 +122,6 @@ const BannerTwo = () => {
 
               <div style={{ height: 200 }}>
               </div>
-              
-
-              
             </div>
           </div>
         </div>
