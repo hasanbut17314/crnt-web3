@@ -107,7 +107,7 @@ const BannerTwo = () => {
                       >
                         {" "}
                         {/* ${ethers.utils.formatEther(`${stagePrice}`)} = 1 CRNT */}
-                        ${stagePrice} = 1 CRNT
+                        $ {stagePrice} =  1 CRNT
                       </span>
                     </h4>
                   </div>
