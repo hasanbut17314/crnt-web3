@@ -70,13 +70,7 @@ const BannerTwo = () => {
                         <span className="sm-stage">stage 3</span>
                         Momentum
                       </li>
-                      <li className="d-flex align-items-center flex-column">
-                        <span className="sm-stage">stage 4</span>
-                        Expansion
-                      </li>
-                      <li className="d-flex align-items-center flex-column">
-                        <span className="sm-stage">stage 5</span> Pinnacle
-                      </li>
+                     
                     </ul>
 
                     <div className="progress">
