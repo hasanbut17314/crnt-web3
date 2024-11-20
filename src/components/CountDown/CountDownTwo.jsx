@@ -56,7 +56,7 @@ const CountDownTwo = () => {
 
   return (
     <ScrollAnimation animateIn="fadeInUp">
-    <section id="countdown" className="countdown-area-two">
+    <section id="countdown" style={{ marginBottom: '90px' }}>
       <div className="container custom-container-four">
         <div className="row">
           <div className="col-lg-12">
@@ -82,9 +82,9 @@ const CountDownTwo = () => {
                   : true
                   ? publicSaleStartTime && (
                     <> 
-                    <div style={{ backgroundColor: '#fcfcfc', padding: '20px',  borderRadius: '8px', color: 'white', border: '2px solid #eb9e23' }}>
-                       <h2 className="title" style={{ marginBottom: '8px' }}>token raised </h2>
-                       <p >44280000000000000000000000 </p>
+                    <div style={{ backgroundColor: '#041235', padding: '30px 50px', borderRadius:'20px', textAlign:'center' }}>
+                       <h5 className="title" style={{ marginBottom: '8px', color:'white'}}>token raised </h5>
+                       <p style={{color:'wheat'}} >44280000 </p>
 
                      </div>
                       <Countdown
