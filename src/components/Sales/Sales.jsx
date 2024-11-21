@@ -69,8 +69,8 @@ const Sales = () => {
                       className={"show active"}
                       id="seedsale"
                       ariaLabel="seedsaletab"
-                      title="1 CRNT = 0.100 USD"
-                      tokens="4,369,000 CRNT"
+                      title="1 CRNT = 0.0100 USD"
+                      tokens="33,369,000 CRNT"
                       duration="23 days"
                       subtitle="Ignition Stage"
                       description="This initial phase introduces early adopters to the CreationNetwork platform at an entry price of $0.100 per token, offering exclusive, low-cost access and paving the way for project growth and support."
@@ -81,10 +81,10 @@ const Sales = () => {
                       className={""}
                       id="presale"
                       ariaLabel="presaletab"
-                      title="1 CRNT = 0.125 USD"
+                      title="1 CRNT = 0.0125 USD"
                       subtitle="Acceleration Stage"
-                      tokens="9,963,000 CRNT"
-                      duration="26 days"
+                      tokens="44,200,500 CRNT"
+                      duration="15 days"
                       description="As interest builds, this phase provides investors an opportunity at $0.125 per token, allowing for increased engagement and support as the project progresses towards its development milestones."
                       link="/"
                     />
@@ -92,10 +92,10 @@ const Sales = () => {
                       className={""}
                       id="publicsale"
                       ariaLabel="publicsaletab"
-                      title="1 CRNT = 0.150 USD"
+                      title="1 CRNT = 0.0150 USD"
                       subtitle="Momentum Stage"
-                      tokens="18,369,000 CRNT"
-                      duration="29 days"
+                      tokens="44,200,500 CRNT"
+                      duration="15 days"
                       description="With heightened engagement, tokens are offered at $0.150, marking a period where the project gains traction and community involvement becomes pivotal to the project's momentum."
                       link="/"
                     />
