@@ -49,7 +49,7 @@ const WhitePaper = () => {
                   <a
                     className="btn btn-two"
                     href={
-                      "https://drive.google.com/file/d/1nOXMauzD7ToAc8Qy6wef8o1tvgaZSsiy/view"
+                      "https://drive.google.com/file/d/1lfBxPUy-3-bobEDkt7qVyF9yrCRp2v-W/view?usp=sharing"
                     }
                     target="_blank"
                   >
@@ -73,11 +73,11 @@ const WhitePaper = () => {
                   />
                 </Modal> */}
                   <a
-                    href={`https://drive.google.com/file/d/1PWoS-GlNsGOClRsu6gCiq9_klTfp2yBY/view?usp=drivesdk`}
+                    href={`https://drive.usercontent.google.com/u/0/uc?id=1lfBxPUy-3-bobEDkt7qVyF9yrCRp2v-W&export=download`}
                     download={"CRNT Whitepaper"}
                     className="btn btn-two"
                     style={{ marginLeft: "5px" }}
-                    target="_blank"
+                  
                   >
                     Download Doc
                   </a>

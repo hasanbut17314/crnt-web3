@@ -62,22 +62,6 @@ const Sales = () => {
                       ariaControls="publicsale"
                       ariaSelected={false}
                     />
-                    <SalesTabButton
-                      title="Stage 4"
-                      className=""
-                      id="stage4tab"
-                      target="#stagefour"
-                      ariaControls="publicsale"
-                      ariaSelected={false}
-                    />
-                    <SalesTabButton
-                      title="Stage 5"
-                      className=""
-                      id="stagefivetab"
-                      target="#stagefive"
-                      ariaControls="publicsale"
-                      ariaSelected={false}
-                    />
                   </ul>
 
                   <div className="tab-content" id="myTabContent">
@@ -115,28 +99,8 @@ const Sales = () => {
                       description="With heightened engagement, tokens are offered at $0.150, marking a period where the project gains traction and community involvement becomes pivotal to the project's momentum."
                       link="/"
                     />
-                    <SalesTabContent
-                      className={""}
-                      id="stagefour"
-                      ariaLabel="stagefourtab"
-                      title="1 CRNT = 0.175 USD"
-                      subtitle="Expansion Stage"
-                      tokens="37,963,000 CRNT"
-                      duration="23 days"
-                      description="Priced at $0.175, this stage targets broader adoption, with a substantial token offering to bolster the project’s reach and stability, aiming to enhance community and market presence."
-                      link="/"
-                    />
-                    <SalesTabContent
-                      className={""}
-                      id="stagefive"
-                      ariaLabel="stagefivetab"
-                      title="1 CRNT = 0.200 USD"
-                      subtitle="Pinnacle Stage"
-                      tokens="51,106,000 CRNT"
-                      duration="29 days"
-                      description="The final phase, priced at $0.200, represents the peak of the token sale, emphasizing full market integration and preparing for platform-wide functionalities and utility for all CRNT holders."
-                      link="/"
-                    />
+                    
+                 
                   </div>
                 </div>
               </div>

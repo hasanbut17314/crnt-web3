@@ -20,6 +20,9 @@ import { Web3Modal } from "@web3modal/react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { bsc } from "wagmi/chains";
 import Terms from "./pages/t&c/t&c";
+import Privacy from './pages/p&p/p&p';
+import Disclamer from './pages/disclamer/disclamer'
+import Regulatory from './pages/R&S/r&s'
 // import "../styles.css";
 const chains = [bsc];
 const projectId = ProjectId;
@@ -59,6 +62,9 @@ function App() {
           {/* <Route path="/home-two" element={<Home />} /> */}
           <Route path="/" element={<HomeTwo />} />
           <Route path="terms-and-conditions" element={<Terms />} />
+          <Route path="privacy-and-policies" element={<Privacy />} />
+          <Route path="disclamers" element={<Disclamer />} />
+          <Route path="regulatory-and-statements" element={<Regulatory/>} />
           {/* <Route path="blog-details" element={<BlogDetailsPage />} /> */}
         </Routes>
       </WagmiConfig>

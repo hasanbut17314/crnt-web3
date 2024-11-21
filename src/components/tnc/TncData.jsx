@@ -81,6 +81,34 @@ const TncData = () => {
             the opportunity with their network.
             <br />
             <br />
+            <strong>-  Acceptance of Terms: </strong>
+            By participating in the ICO token pre-sale of CreationNetwork AI, you agree to be bound by these Terms of Service. If you do not agree, you should not participate in the pre-sale or use related services.
+            <br />
+            <br />
+            <strong>-  Eligibility: </strong>
+            Participants must be at least 18 years old and comply with their jurisdiction's legal requirements. It is your responsibility to determine whether you are legally permitted to purchase and hold the tokens under your local laws.
+            <br />
+            <br />
+            <strong>-  Nature of Tokens: </strong>
+            The tokens sold during the pre-sale are utility tokens designed for use within the CreationNetwork AI platform. They do not represent ownership, shares, or securities in any company.
+            <br />
+            <br />
+             <strong>-  Risks : </strong>
+             Purchasing tokens involves high risk, including the potential loss of your investment, changes in the regulatory environment, and fluctuations in token value. By participating, you acknowledge and accept these risks.
+            <br />
+            <br />
+            <strong>-  Refund Policy : </strong>
+            All token sales are final. No refunds or cancellations will be issued once payment is made, except as required by applicable laws.
+            <br />
+            <br />
+            <strong>-  Prohibited Use : </strong>
+            You may not use the tokens for illegal activities or in jurisdictions where participation in an ICO is restricted.
+            <br />
+            <br />
+            <strong>-  Changes to Terms : </strong>
+            We reserve the right to modify these Terms of Service at any time. Participants will be notified of significant changes.
+            <br />
+            <br />
             Don't miss out on this exclusive opportunity to join the CRNT token
             sale. With limited allocations for each stage and increasing prices
             as the sale progresses, be sure to secure your spot on the whitelist

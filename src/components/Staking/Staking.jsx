@@ -168,6 +168,26 @@ const Staking = () => {
             </div>
           </div>
         </div>
+        <div className="row  p-4 rounded bg-white" style={{
+    boxShadow: "0 1px 1px rgba(0, 0, 0, 0.1)",
+    borderBottomLeftRadius: "2px",
+    borderBottomRightRadius: "2px",
+    marginTop:'10px',
+    marginBottom:'2px'
+  }}>
+          <p className="text-center mb-4 mt-6">Vesting</p>
+          <div className="col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <p>Totel token released </p>
+            <p>0 CRNT</p>
+          </div>
+          <div className="col-md-6 d-flex justify-content-center align-items-center">
+            <button className="btn btn-secondary"
+                  style={{
+                    backgroundColor: "#007bff",
+                    borderColor: "#007bff"
+                  }}>Release Token</button>
+          </div>
+        </div>
         {/* <div className="row">
           <div className="col-md-6 d-flex justify-content-center align-items-center mt-3">
             <p>MAX Stack Ammount 44,280,000.00 CRNT</p>
