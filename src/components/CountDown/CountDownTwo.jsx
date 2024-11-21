@@ -4,14 +4,10 @@ import { useContext } from "react";
 import { IcoContext } from "../../contexts/context";
 import moment from "moment/moment";
 import ScrollAnimation from "react-animate-on-scroll";
-
 const CountDownTwo = () => {
-  const { currentStage, preSaleStartTime, publicSaleStartTime } =
+  const { currentStage, preSaleStartTime, publicSaleStartTime=6499 } =
     useContext(IcoContext);
-
     console.log(publicSaleStartTime,'puvlicSaleStart')
-
-    // console.log(currentStage,'currentStage')
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -51,9 +47,7 @@ const CountDownTwo = () => {
     }
   };
   const stages = {
-
   }
-
   return (
     <ScrollAnimation animateIn="fadeInUp">
     <section id="countdown" style={{ marginBottom: '90px' }}>
@@ -61,9 +55,8 @@ const CountDownTwo = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="countdown-wrap">
-              <h2 className="title">Stage {currentStage} will End In..</h2>
+              <h2 className="text-black text-center mb-5">Stage {currentStage} will End In..</h2>
               <div id="countdown-gampang"></div>
-
               <div className="custom-countdown-two">
                 {currentStage == 1
                   ? preSaleStartTime && (
@@ -81,14 +74,13 @@ const CountDownTwo = () => {
                     )
                   : true
                   ? publicSaleStartTime && (
-                    <> 
+                    <>
                     <div style={{ backgroundColor: '#041235', padding: '30px 50px', borderRadius:'20px', textAlign:'center' }}>
                        <h5 className="title" style={{ marginBottom: '8px', color:'white'}}>token raised </h5>
-                       <p style={{color:'wheat'}} >44280000 </p>
-
+                       <p style={{color:'wheat'}} >0 </p>
                      </div>
                       <Countdown
-                        date={Date.now() + 10000 }
+                        date={Date.now() +  23 * 24 * 60 * 60 * 1000 }
                         renderer={renderer}
                       />
                       </>
@@ -103,5 +95,4 @@ const CountDownTwo = () => {
     </ScrollAnimation>
   );
 };
-
 export default CountDownTwo;

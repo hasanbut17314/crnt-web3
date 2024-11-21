@@ -7,6 +7,7 @@ import Banner from "../../components/Banner/Banner";
 import ContactTwo from "../../components/Contact/ContactTwo";
 import ContactOne from "../../components/Contact/ContactOne";
 import CountDownTwo from "../../components/CountDown/CountDownTwo";
+
 import CounterArea from "../../components/CounterArea/CounterArea";
 import DownloadArea from "../../components/DownloadArea/DownloadArea";
 import Faq from "../../components/Faq/Faq";
@@ -27,6 +28,9 @@ import Distribution from "../../components/Distribution/Distribution";
 import About4 from "../../components/About/About4";
 import Distribution2 from "../../components/Distribution/Distribution2";
 import Staking from "../../components/Staking/Staking";
+
+// const CountDownTwo = React.lazy(() => import("../../components/CountDown/CountDownTwo"));
+
 
 const HomeTwo = () => {
   const { isLoading } = useContext(IcoContext);

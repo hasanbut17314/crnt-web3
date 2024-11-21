@@ -9,7 +9,7 @@ const ContactOne = () => {
       icon: "fa-envelope",
       content: (
         <>
-          company@gmail.com <br /> infoweb@gmail.com
+          marketing@creationnetwork.ai
         </>
       ),
     },
@@ -17,8 +17,7 @@ const ContactOne = () => {
       icon: "fa-phone",
       content: (
         <>
-          +84 0977425031
-          <br /> +998 765 775 34
+           +44 757 6131 708
         </>
       ),
     },
@@ -26,8 +25,8 @@ const ContactOne = () => {
       icon: "fa-map-marker-alt",
       content: (
         <>
-          State/province/area: <br />
-          Georgia 198
+         71-75 SHELTON STREET <br/>
+         COVENT GARDEN LONDON WC2H 9JQ
         </>
       ),
     },

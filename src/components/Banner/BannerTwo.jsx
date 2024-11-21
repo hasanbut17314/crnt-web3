@@ -127,7 +127,7 @@ const BannerTwo = () => {
         <ul>
           <li>
             <a
-              href="https://www.facebook.com/www.CreationNetworkAI/"
+              href="https://www.facebook.com/share/18kBceJCyo/"
               target="_blank"
               className="banner-social-link"
             >
@@ -137,7 +137,7 @@ const BannerTwo = () => {
           </li>
           <li>
             <a
-              href="https://twitter.com/CRNTNetworkAI"
+              href="https://x.com/CRNTNetworkAI?t=hH8bQ7IBpm6M252wZxwh8Q&s=09"
               target="_blank"
               className="banner-social-link"
             >
@@ -157,7 +157,7 @@ const BannerTwo = () => {
           </li>
           <li>
             <a
-              href="https://www.instagram.com/creation_network.ai/"
+              href="https://www.instagram.com/creationnetwork.ai/profilecard/?igsh=MTliOWE3b2w5M2gz"
               target="_blank"
               className="banner-social-link"
             >

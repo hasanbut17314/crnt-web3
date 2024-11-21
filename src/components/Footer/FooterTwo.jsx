@@ -24,6 +24,15 @@ const FooterTwo = () => {
                     <li>
                       <Link to="/terms-and-conditions">Terms & Conditions</Link>
                     </li>
+                    <li>
+                      <Link to="/privacy-and-policies">Privacy Policy</Link>
+                    </li>
+                    <li>
+                      <Link to="/disclamers">Disclaimers</Link>
+                    </li>
+                    <li>
+                      <Link to="/regulatory-and-statements">Regulatory Statements</Link>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -60,7 +69,7 @@ const FooterTwo = () => {
               <div className="col-lg-5">
                 <div className="copyright-text">
                   <p>
-                    Copyright &copy; 2023. All Rights Reserved Creationnetwork
+                    Copyright &copy; 2024. All Rights Reserved Creationnetwork
                   </p>
                 </div>
               </div>
@@ -82,7 +91,7 @@ const FooterTwo = () => {
                   <ul>
                     <li>
                       <a
-                        href="https://www.facebook.com/www.CreationNetworkAI/"
+                        href="https://www.facebook.com/share/18kBceJCyo/"
                         target="_blank"
                       >
                         <i className="fab fa-facebook-square"></i>
@@ -90,7 +99,7 @@ const FooterTwo = () => {
                     </li>
                     <li>
                       <a
-                        href="https://twitter.com/CRNTNetworkAI"
+                        href="https://x.com/CRNTNetworkAI?t=hH8bQ7IBpm6M252wZxwh8Q&s=09"
                         target="_blank"
                       >
                         <i className="fab fa-twitter"></i>
@@ -98,7 +107,7 @@ const FooterTwo = () => {
                     </li>
                     <li>
                       <a
-                        href="https://www.instagram.com/creation_network.ai/"
+                        href="https://www.instagram.com/creationnetwork.ai/profilecard/?igsh=MTliOWE3b2w5M2gz"
                         target="_blank"
                       >
                         <i className="fab fa-instagram"></i>
