@@ -34,8 +34,6 @@ const BannerTwo = () => {
     calculateAmountRaised();
   });
 
- 
-
   return (
     <section className="banner-area-two" id="home">
       <div className="banner-bg-two"></div>
@@ -47,7 +45,22 @@ const BannerTwo = () => {
               <div className="row justify-content-center">
                 <div className="col-lg-10">
                   <div className="fade-in-up banner-content text-center">
-                    <img src={fireIcon} width={"25%"} alt="" />
+                    {/* <img src={fireIcon} width={"25%"} alt="" /> */}
+                    <a
+                      href="https://creationnetwork.ai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <button
+                        className="btn btn-secondary"
+                        style={{
+                          backgroundColor: "#007bff",
+                          borderColor: "#007bff",
+                        }}
+                      >
+                        App
+                      </button>
+                    </a>
                     <br />
                     <br />
 
@@ -70,7 +83,6 @@ const BannerTwo = () => {
                         <span className="sm-stage">stage 3</span>
                         Momentum
                       </li>
-                     
                     </ul>
 
                     <div className="progress">
@@ -79,14 +91,14 @@ const BannerTwo = () => {
                           currentStage == 1
                             ? "progress-bar"
                             : currentStage == 2
-                              ? "progress-bar stage-2"
-                              : currentStage == 3
-                                ? "progress-bar stage-3"
-                                : currentStage == 4
-                                  ? "progress-bar stage-4"
-                                  : currentStage == 5
-                                    ? "progress-bar stage-5"
-                                    : "progress-bar"
+                            ? "progress-bar stage-2"
+                            : currentStage == 3
+                            ? "progress-bar stage-3"
+                            : currentStage == 4
+                            ? "progress-bar stage-4"
+                            : currentStage == 5
+                            ? "progress-bar stage-5"
+                            : "progress-bar"
                         }
                         role="progressbar"
                         style={{
@@ -107,22 +119,19 @@ const BannerTwo = () => {
                       >
                         {" "}
                         {/* ${ethers.utils.formatEther(`${stagePrice}`)} = 1 CRNT */}
-                        $ {stagePrice} =  1 CRNT
+                        $ {stagePrice} = 1 CRNT
                       </span>
                     </h4>
                   </div>
                 </div>
               </div>
 
-              <div style={{ height: 200 }}>
-              </div>
+              <div style={{ height: 200 }}></div>
             </div>
           </div>
         </div>
       </div>
-      
-      
-      
+
       <div className="banner-social-wrap">
         <ul>
           <li>
