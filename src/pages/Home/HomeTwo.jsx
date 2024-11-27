@@ -19,6 +19,7 @@ import LayoutTwo from "../../layouts/LayoutTwo";
 import Roadmap2 from "../../components/Roadmap/Roadmap2";
 import Sales from "../../components/Sales/Sales";
 import WhitePaper from "../../components/WhitePaper/WhitePaper";
+import Icons from "../../components/Icons/Icons";
 import { useContext } from "react";
 import { IcoContext } from "../../contexts/context";
 import LoadingOverlay from "react-loading-overlay";
@@ -60,9 +61,11 @@ const HomeTwo = () => {
 
         <About4 />
         <TeamTwo />
-
+       
         <WhitePaper />
+      
         <Sales />
+        <Icons/>
         <Faq />
         {/* <ContactTwo />*/}
         <ContactOne />

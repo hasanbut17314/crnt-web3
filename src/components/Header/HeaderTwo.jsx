@@ -21,6 +21,7 @@ const HeaderTwo = () => {
     fixed: "",
     header: "",
   });
+  const [isHovered, setIsHovered] = useState(false);
 
   const stickNavbar = () => {
     if (window !== undefined) {
@@ -214,7 +215,32 @@ const HeaderTwo = () => {
                     <ul>
                       {currentAccount == null ? (
                         <>
-                          <li className="header-lang"></li>
+                          {/* <li className="header-lang"></li> */}
+                          {/* <li className={isActiveLink("#contact")}> */}
+                          <a
+                            href="https://creationnetwork.ai"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <button
+                              className=" btn-secondary"
+                              style={{
+                                backgroundColor: isHovered ? "#564DCA" : "#00C4F4",
+                                lineHeight: "1",
+                                fontSize: "14px",
+                                padding: "8px 13px 10px 13px",
+                                border: "none",
+                                cursor: "pointer",
+                                transition: "0.5s",
+                                borderRadius:'7px'
+                              }}
+                              onMouseEnter={() => setIsHovered(true)}
+                              onMouseLeave={() => setIsHovered(false)}
+                            >
+                              App
+                            </button>
+                          </a>
+                          {/* </li> */}
 
                           <li className="header-btn">
                             {/* <BuyNow label={"Buy Now"} /> */}

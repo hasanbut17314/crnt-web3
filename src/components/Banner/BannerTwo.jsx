@@ -46,7 +46,7 @@ const BannerTwo = () => {
                 <div className="col-lg-10">
                   <div className="fade-in-up banner-content text-center">
                     {/* <img src={fireIcon} width={"25%"} alt="" /> */}
-                    <a
+                    {/* <a
                       href="https://creationnetwork.ai"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -60,7 +60,7 @@ const BannerTwo = () => {
                       >
                         App
                       </button>
-                    </a>
+                    </a> */}
                     <br />
                     <br />
 
