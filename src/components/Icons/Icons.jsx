@@ -164,7 +164,7 @@ const Icons = () => {
   return (
     <div className="mt-5">
         <div>
-        <h3 className="text-black text-center mb-5">We Are Published Osn..</h3>
+        <h3 className="text-black text-center mb-5">We Are Published On..</h3>
         </div>
         {/* style={{marginRight:'-30px'}} */}
       <div className="row  flex-nowrap  px-6 scroll-x">
