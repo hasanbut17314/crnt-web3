@@ -10,6 +10,7 @@ import { ethers } from "ethers";
 
 const BannerTwo = () => {
   const [percentRaised, setPercentRaised] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const {
     stagePrice,
@@ -61,15 +62,47 @@ const BannerTwo = () => {
                         App
                       </button>
                     </a> */}
-                    <br />
-                    <br />
 
-                    <h2 className="title">
+                    <div style={{marginTop:'-3rem'}}> 
+
+                    
+                    <h2 className="title"  >
                       An Innovative Platform Empowering <span>Global</span>{" "}
                       Internet Users
                     </h2>
+
+                    </div>
+
+                    <h6 className="title" style={{marginTop:'-2rem'}}>Explore our  <span>AI </span> Platform </h6>
+                  <div style={{marginTop:'-3rem'}}> 
+                    <a
+                      href="https://creationnetwork.ai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      
+                    >
+                      <button
+                        className=" btn-secondary"
+                        style={{
+                          backgroundColor: isHovered ? "#564DCA" : "#00C4F4",
+                          lineHeight: "1",
+                          fontSize: "14px",
+                          padding: "15px 27px",
+                          border: "none",
+                          cursor: "pointer",
+                          transition: "0.5s",
+                          borderRadius: "7px",
+                        }}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                      >
+                         <h6> creation Network </h6>
+                      </button>
+                    </a>
+
+                    </div>
                   </div>
-                  <div className="banner-progress-wrap">
+                  <div className="banner-progress-wrap" style={{marginTop:'2rem'}}>
                     <ul>
                       <li className="d-flex align-items-center flex-column">
                         <span className="sm-stage">stage 1</span>
