@@ -128,7 +128,7 @@ const FooterTwo = () => {
                     </li>
                     <li>
                       <a
-                        href="https://t.me/+rtplZWdOjYM4OTBk"
+                        href="https://t.me/+lK4mAsGvi15jZDk0"
                         target="_blank"
                         className="icon"
                       >
