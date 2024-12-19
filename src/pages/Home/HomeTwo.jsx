@@ -17,6 +17,7 @@ import TeamTwo from "../../components/Team/TeamTwo";
 import WhyChooseUsTwo from "../../components/WhyChooseUs/WhyChooseUsTwo";
 import LayoutTwo from "../../layouts/LayoutTwo";
 import Roadmap2 from "../../components/Roadmap/Roadmap2";
+import Roadmap3 from "../../components/Roadmap/Roadmap3";
 import Sales from "../../components/Sales/Sales";
 import WhitePaper from "../../components/WhitePaper/WhitePaper";
 import Icons from "../../components/Icons/Icons";
@@ -29,6 +30,7 @@ import Distribution from "../../components/Distribution/Distribution";
 import About4 from "../../components/About/About4";
 import Distribution2 from "../../components/Distribution/Distribution2";
 import Staking from "../../components/Staking/Staking";
+import './Home.css'
 
 // const CountDownTwo = React.lazy(() => import("../../components/CountDown/CountDownTwo"));
 
@@ -54,8 +56,11 @@ const HomeTwo = () => {
 
         {/* <CounterArea /> */}
         {/* <RoadmapTwo /> */}
-        <div className="overflow-x-hidden">
-          <Roadmap2 />
+        <div className="overflow-x-hidden roadmap3">
+          <Roadmap3 />
+        </div>
+        <div className="roadmap2">
+          <Roadmap2/>
         </div>
         {/* <DownloadArea /> */}
 

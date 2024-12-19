@@ -1,0 +1,16 @@
+.roadmap3 {
+    display: block;
+  }
+.roadmap2 {
+    display: none;
+}
+  
+  /* Hide the element on mobile screens */
+  @media (max-width: 767px) {
+    .roadmap3 {
+      display: none;
+    }
+    .roadmap2 {
+        display: block;
+    }
+  }

@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineSetting } from "react-icons/ai";
 
+
 const RoadmapItem2 = ({ reverse, data, firstItem }) => {
   const { label, icon: Icon, list } = data;
   return (
@@ -13,7 +14,11 @@ const RoadmapItem2 = ({ reverse, data, firstItem }) => {
         <div className="roadmap-list">
           <ul>
             {list.map(({ id, text }) => {
-              return <li key={id}>{text}</li>;
+              return (
+                <li key={id}>
+                  {text}
+                </li>
+              );
             })}
           </ul>
         </div>

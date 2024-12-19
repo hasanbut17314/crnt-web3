@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import RoadmapItem2 from "./RoadmapItem2";
+import { Container } from "react-bootstrap";
+import { AiOutlineSetting } from "react-icons/ai";
+import ScrollAnimation from "react-animate-on-scroll";
 
 const roadmapItems = [
   {
     id: 1,
     label: "Q1 2023",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -18,6 +23,7 @@ const roadmapItems = [
   {
     id: 2,
     label: "Q2 2024",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -29,6 +35,7 @@ const roadmapItems = [
   {
     id: 3,
     label: "Q3 2024",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -47,6 +54,7 @@ const roadmapItems = [
   {
     id: 4,
     label: "Q4 2024 – I",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -57,6 +65,7 @@ const roadmapItems = [
   {
     id: 5,
     label: "Q4 2024 – I I",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -67,6 +76,7 @@ const roadmapItems = [
   {
     id: 6,
     label: "Q1 2025",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -77,6 +87,7 @@ const roadmapItems = [
   {
     id: 7,
     label: "Q2 2025",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -87,6 +98,7 @@ const roadmapItems = [
   {
     id: 8,
     label: "Q3 2025",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -97,6 +109,7 @@ const roadmapItems = [
   {
     id: 9,
     label: "Q4 2025",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -107,6 +120,7 @@ const roadmapItems = [
   {
     id: 10,
     label: "Q1 2026",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -117,6 +131,7 @@ const roadmapItems = [
   {
     id: 11,
     label: "Q2 2026",
+    icon: AiOutlineSetting,
     list: [
       {
         id: 1,
@@ -126,74 +141,42 @@ const roadmapItems = [
   },
 ];
 
-const RoadmapItem = ({ data, isLast }) => (
-  <div className="position-relative ps-5 mb-5">
-    {/* Vertical line */}
-    {!isLast && (
-      <div className="position-absolute start-0 top-0 h-100"
-           style={{
-             width: '2px',
-             backgroundColor: 'rgba(255, 255, 255, 0.3)',
-             transform: 'translateX(15px)',
-             top: '24px'
-           }}
-      />
-    )}
-    
-    {/* Timeline dot */}
-    <div className="position-absolute start-0 rounded-circle bg-primary" 
-         style={{
-           width: '32px',
-           height: '32px',
-           transform: 'translateX(0)',
-           display: 'flex',
-           alignItems: 'center',
-           justifyContent: 'center'
-         }}>
-      <i className="fas fa-cog text-white small"></i>
-    </div>
-    
-    {/* Content */}
-    <div className="ms-4">
-      <h3 className="h4 text-white mb-3">{data.label}</h3>
-      <div className="p-3 rounded" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
-        <ul className="list-unstyled mb-0">
-          {data.list.map((item) => (
-            <li key={item.id} className="text-white-50 mb-2">
-              <i className="fas fa-circle me-2 small"></i>
-              {item.text}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </div>
-);
-
-const Roadmap2 = () => {
+const Roadmap3 = () => {
   return (
-    <div className="overflow-hidden">
-      <section id="roadmap" className="roadmap-section team-bg">
-        <div className="container py-5">
-          <h2 className="title text-center mb-5">
-            Projects<span> Roadmap</span>
-          </h2>
-          
-          <div className="row justify-content-center">
-            <div className="col-12 col-lg-10">
-              {roadmapItems.map((item, index) => (
-                <RoadmapItem 
-                  key={item.id}
-                  data={item}
-                  isLast={index === roadmapItems.length - 1}
-                />
-              ))}
+    <div className="overflow-x-hidden"> 
+    <section id="roadmap" className="roadmap-section team-bg">
+      <ScrollAnimation animateIn="fadeInUp">
+        <h2 className="title pb-20">
+          Projects<span> Roadmap</span>
+        </h2>
+        <div className="scroll-x" style={{ overflowX: "auto" }}>
+          <div className="roadmap">
+            <div
+              className="roadmap-line-segment"
+              style={{ minWidth: "100vw" }}
+            ></div>
+            <div className="roadmap-line">
+              <Container>
+                <div className="roadmap-items-wrapper">
+                  {roadmapItems.map((item, index) => {
+                    return (
+                      <RoadmapItem2
+                        key={item.id}
+                        reverse={index % 2 !== 0}
+                        data={item}
+                        firstItem={index === 0}
+                      />
+                    );
+                  })}
+                </div>
+              </Container>
             </div>
           </div>
         </div>
-      </section>
+      </ScrollAnimation>
+    </section>
     </div>
   );
 };
 
-export default Roadmap2;
+export default Roadmap3;

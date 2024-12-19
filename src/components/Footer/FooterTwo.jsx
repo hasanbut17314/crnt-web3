@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import { scrollToTop } from "../../lib/helpers";
+import '../../assets/css/footer.css'
 
 // scroll to element by id
 const handleClickScroll = (id) => {
@@ -93,6 +94,7 @@ const FooterTwo = () => {
                       <a
                         href="https://www.facebook.com/share/18kBceJCyo/"
                         target="_blank"
+                        className="icon"
                       >
                         <i className="fab fa-facebook-square"></i>
                       </a>
@@ -101,14 +103,16 @@ const FooterTwo = () => {
                       <a
                         href="https://x.com/CRNTNetworkAI?t=hH8bQ7IBpm6M252wZxwh8Q&s=09"
                         target="_blank"
+                        className="icon"
                       >
-                        <i className="fab fa-twitter"></i>
+                        <i className="fab fa-twitter "></i>
                       </a>
                     </li>
                     <li>
                       <a
                         href="https://www.instagram.com/creationnetwork.ai/profilecard/?igsh=MTliOWE3b2w5M2gz"
                         target="_blank"
+                        className="icon"
                       >
                         <i className="fab fa-instagram"></i>
                       </a>
@@ -117,8 +121,18 @@ const FooterTwo = () => {
                       <a
                         href="https://www.pinterest.com/wwwcreationnetworkai/"
                         target="_blank"
+                        className="icon"
                       >
                         <i className="fab fa-pinterest"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://t.me/+rtplZWdOjYM4OTBk"
+                        target="_blank"
+                        className="icon"
+                      >
+                        <i className="fab fa-telegram-plane " ></i>
                       </a>
                     </li>
                   </ul>
