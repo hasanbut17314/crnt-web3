@@ -1,0 +1,12 @@
+.icon {
+    color: #229ED9 !important;
+    font-size: 24px !important;
+    opacity: 1 !important;
+    filter: none !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    fill: #229ED9 !important;
+    stroke: #229ED9 !important;
+    background: transparent !important;
+}
