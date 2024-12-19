@@ -167,23 +167,32 @@ const Icons = () => {
         <h3 className="text-black text-center mb-5">We Are Published On..</h3>
         </div>
         {/* style={{marginRight:'-30px'}} */}
-      <div className="row  flex-nowrap  px-6 scroll-x">
-        {iconsDetails.map((x, index) => (
-          <div key={index} className="col-1 custom-col "style={{marginRight:'-10px'}} >
-            <a
-              href={x.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src={x.src}
-                alt="Decrypt Icon"
-                style={{ width: "60px", height: "60px" }}
-              />
-            </a>
-          </div>
-        ))}
-      </div>
+        <div
+  className="row flex-nowrap scroll-x px-3"
+  style={{ maxWidth: "100%" }}
+>
+  {iconsDetails.map((x, index) => (
+    <div
+      key={index}
+      className="col-auto custom-col d-flex justify-content-center align-items-center"
+      style={{ marginRight: "10px" }}
+    >
+      <a href={x.href} target="_blank" rel="noopener noreferrer">
+        <img
+          src={x.src}
+          alt="Decrypt Icon"
+          style={{
+            width: "60px",
+            height: "60px",
+            objectFit: "contain", // Ensures the image doesn't get distorted
+            maxWidth: "100%", // Prevents shrinking below this size
+          }}
+        />
+      </a>
+    </div>
+  ))}
+</div>
+
     </div>
   );
 };
