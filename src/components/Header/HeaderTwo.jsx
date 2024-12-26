@@ -87,21 +87,7 @@ const HeaderTwo = () => {
     return id == hash ? "active" : "";
   };
 
-  // const handleWalletConnect = async () => {
-  //   if (window.ethereum) {
-  //     connectWallet();
-  //   } else {
-  //     toast.error("Install Metamask", {
-  //       position: "top-center",
-  //       autoClose: 2000,
-  //       hideProgressBar: true,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //     });
-  //   }
-  // };
+  
 
   return (
     <header id="header">
@@ -147,16 +133,7 @@ const HeaderTwo = () => {
                         >
                           Home
                         </Link>
-                        {/* <ul className={cn("sub-menu")}>
-                          <li className={cn(pathname == "/" && "active")}>
-                            <NavLink to="/">Home One</NavLink>
-                          </li>
-                          <li
-                            className={cn(pathname == "/home-two" && "active")}
-                          >
-                            <NavLink to="/home-two">Home Two</NavLink>
-                          </li>
-                        </ul> */}
+                  
                       </li>
                       <li className={cn(hash == "#about" && "active")}>
                         <Link
@@ -185,21 +162,8 @@ const HeaderTwo = () => {
                           Faq
                         </Link>
                       </li>
-                      {/* <li className={"menu-item-has-children"}>
-                        <Link to="/blog">Blog</Link>
-                        <ul className={cn("sub-menu")}>
-                          <li className={cn(pathname == "/blog" && "active")}>
-                            <Link to="/blog">Our Blog</Link>
-                          </li>
-                          <li
-                            className={cn(
-                              pathname == "/blog-details" && "active"
-                            )}
-                          >
-                            <Link to="/blog-details">Blog Details</Link>
-                          </li>
-                        </ul>
-                      </li> */}
+              
+              
                       <li className={isActiveLink("#contact")}>
                         <Link
                           to="/#contact"
@@ -215,19 +179,10 @@ const HeaderTwo = () => {
                     <ul>
                       {currentAccount == null ? (
                         <>
-                          {/* <li className="header-lang"></li> */}
-                          {/* <li className={isActiveLink("#contact")}> */}
-                          
-                          {/* </li> */}
+                        
 
                           <li className="header-btn">
-                            {/* <BuyNow label={"Buy Now"} /> */}
-                            {/* <button
-                              className="btn"
-                              onClick={handleWalletConnect}
-                            >
-                              Connect Wallet
-                            </button> */}
+                           
                             <ConnectWallet />
                           </li>
                         </>
@@ -254,6 +209,7 @@ const HeaderTwo = () => {
 
               {/* <!-- Mobile Menu  --> */}
               <div className="mobile-menu">
+                
                 <nav className="menu-box">
                   <div className="close-btn">
                     <i className="fas fa-times"></i>
@@ -270,6 +226,34 @@ const HeaderTwo = () => {
                   <div className="menu-outer">
                     {/* <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--> */}
                   </div>
+                  <div className="mobile-connect-wallet" style={{marginLeft:'1rem'}}>
+                  {currentAccount == null ? (
+                        <>
+                        
+
+                          <li className="header-btn">
+                           
+                            <ConnectWallet />
+                          </li>
+                        </>
+                      ) : (
+                        <>
+                          <li className="header-lang">
+                            {`${currentAccount?.slice(
+                              0,
+                              5
+                            )}...${currentAccount?.slice(
+                              currentAccount?.length - 4
+                            )}`}
+                          </li>
+
+                          <li className="header-btn">
+                            <BuyNow label={"Buy Now"} />
+                          </li>
+                        </>
+                      )}
+    </div>
+
                   <div className="social-links">
                     <ul className="clearfix">
                       <li>
@@ -297,10 +281,14 @@ const HeaderTwo = () => {
                           <i className="fab fa-youtube"></i>
                         </Link>
                       </li>
+                      <li>
+                      {/* <ConnectWallet /> */}
+                      </li>
                     </ul>
                   </div>
                 </nav>
               </div>
+             
               <div className="menu-backdrop"></div>
               {/* <!-- End Mobile Menu --> */}
             </div>
