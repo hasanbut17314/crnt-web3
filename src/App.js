@@ -18,18 +18,17 @@ import {
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { bsc } from "wagmi/chains";
+import { bsc,mainnet,sepolia } from "wagmi/chains";
 import Terms from "./pages/t&c/t&c";
 import Privacy from './pages/p&p/p&p';
 import Disclamer from './pages/disclamer/disclamer'
 import Regulatory from './pages/R&S/r&s'
-// import "../styles.css";
+
 const chains = [bsc];
 const projectId = ProjectId;
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
 
-// 2. Configure wagmi client
 
 const wagmiConfig = createConfig({
   autoConnect: true,
@@ -48,12 +47,6 @@ function App() {
     window.scrollTo(0, 0);
 
   }, [pathname]);
-
-  // useEffect(() => {
-  //   if (window.location.pathname !== "/") {
-  //     window.location.replace("/");
-  //   }
-  // });
 
   return (
     <>

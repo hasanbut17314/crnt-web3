@@ -10,8 +10,12 @@ import { Contract, ethers, providers } from "ethers";
 import { useContext } from "react";
 import { IcoContext } from "../../contexts/context";
 
+import { icoAbi } from "../../utils/constants";
+import { icoAddress } from "../../utils/constants";
+import { useContractRead,useContractWrite,useConnect, useAccount } from 'wagmi'
+
 import "react-toastify/dist/ReactToastify.css";
-import { icoAbi, icoAddress } from "../../utils/constants";
+// import { icoAbi, icoAddress } from "../../utils/constants";
 import { useEffect } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { Link } from "react-router-dom";
@@ -23,7 +27,7 @@ const web3 = new Web3(window.ethereum);
 
 const tabs = [
   { label: "USDT", value: "usdt", icon: "/images/icons/usdt.png" },
-  { label: "BUSD", value: "busd", icon: "/images/icons/busd.png" },
+  
 ];
 
 const BuyNow = (props) => {
@@ -37,6 +41,42 @@ const BuyNow = (props) => {
   const [referralCode, setReferralCode] = useState("");
   const [dollarAmount, setDollarAmount] = useState("");
   const [receivingTokens, setReceivingTokens] = useState(0);
+
+  const { connect, connectors } = useConnect();
+  const { isConnected } = useAccount();
+
+  const {
+        data: currentStageData,
+        isError: isCurrentStageError,
+        isLoading: isCurrentStageLoading,
+      } = useContractRead({
+        address: icoAddress,
+        abi: icoAbi,
+        functionName: "currentStage",
+      });
+
+    const {
+          data: stageDetailsData,
+          isError: isStageDetailsError,
+          isLoading: isStageDetailsLoading,
+        } = useContractRead({
+          address: icoAddress,
+          abi: icoAbi,
+          functionName: "stages",
+          args: [`${currentStageData}`], // Pass currentStage only when available
+        });
+    
+        let pricepertoken
+        if(stageDetailsData){
+          pricepertoken = stageDetailsData[2];
+          pricepertoken = Number(pricepertoken)/1000000000000000000 
+        }
+
+        const { data, isLoadings, isSuccess, write } = useContractWrite({
+          address: icoAddress,
+          abi: icoAbi,
+          functionName: 'buyTokens',
+        });
 
   const handleClose = () => {
     setShow(false);
@@ -54,168 +94,21 @@ const BuyNow = (props) => {
 
   const handleBuy = async (activeTab, amount) => {
     try {
-      const contractAddress = process.env.icoAddress
-      const contract = new web3.eth.Contract(IcoAbi, contractAddress);
-      const accounts = await web3.eth.getAccounts();
-      const userAccount = accounts[0];
+      
 
-      if (activeTab.value == "usdt") {
-        const stablecoinAddress = process.env.USDTADDRRESS
-        const tx = await contract.methods.buyTokens(amount, stablecoinAddress).send({ from: userAccount });
-        console.log('Transaction successful:', tx)
-
-        // console.log(hasReferral);
-        // if (hasReferral) {
-        //   if (referralCode == "" || referralCode.length != 66) {
-        //     toast.error("Provide a Valid Referral Code", {
-        //       position: "top-center",
-        //       autoClose: 3000,
-        //       hideProgressBar: true,
-        //       closeOnClick: true,
-        //       pauseOnHover: true,
-        //       draggable: true,
-        //       progress: undefined,
-        //     });
-        //   } else {
-        //     // console.log("buying with referraall");
-
-        //     if (dollarAmount <= 0 || dollarAmount == "") {
-        //       toast.error(`Enter Valid ${activeTab.value} Amount`, {
-        //         position: "top-center",
-        //         autoClose: 3000,
-        //         hideProgressBar: true,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //       });
-        //     } else {
-        //       // console.log("buying with usdt with referral code");
-        //       await buyWithUsdt(1, dollarAmount, referralCode);
-
-        //       toast.success("Success", {
-        //         position: "top-center",
-        //         autoClose: 3000,
-        //         hideProgressBar: true,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //       });
-        //       handleClose();
-        //     }
-        //   }
-        // } else {
-        //   if (dollarAmount <= 0 || dollarAmount == "") {
-        //     toast.error(`Enter Valid ${activeTab.value} Amount`, {
-        //       position: "top-center",
-        //       autoClose: 3000,
-        //       hideProgressBar: true,
-        //       closeOnClick: true,
-        //       pauseOnHover: true,
-        //       draggable: true,
-        //       progress: undefined,
-        //     });
-        //   } else {
-        //     // console.log("buying with usdt withoutt referral code");
-
-        //     await buyWithUsdt(
-        //       0,
-        //       dollarAmount,
-        //       "0x0000000000000000000000000000000000000000000000000000000000000000"
-        //     );
-
-        //     toast.success("Success", {
-        //       position: "top-center",
-        //       autoClose: 3000,
-        //       hideProgressBar: true,
-        //       closeOnClick: true,
-        //       pauseOnHover: true,
-        //       draggable: true,
-        //       progress: undefined,
-        //     });
-        //     handleClose();
-        //   }
-        //   // console.log("no referral");
-        // }
-      } else {
-        const stablecoinAddress = process.env.BUSDADDRESS
-        const tx = await contract.methods.buyTokens(amount, stablecoinAddress).send({ from: userAccount });
-        console.log('Transaction successful:', tx)
-
-
-        // if (hasReferral) {
-        //   if (referralCode == "" || referralCode.length != 66) {
-        //     toast.error("Provide a Referral Code", {
-        //       position: "top-center",
-        //       autoClose: 3000,
-        //       hideProgressBar: true,
-        //       closeOnClick: true,
-        //       pauseOnHover: true,
-        //       draggable: true,
-        //       progress: undefined,
-        //     });
-        //   } else {
-        //     // console.log("buying with referraall busd");
-        //     if (dollarAmount <= 0) {
-        //       toast.error(`Enter Valid ${activeTab.value} Amount`, {
-        //         position: "top-center",
-        //         autoClose: 3000,
-        //         hideProgressBar: true,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //       });
-        //     } else {
-        //       // console.log("buying with busd with referral code");
-
-        //       await buyWithBusd(1, dollarAmount, referralCode);
-        //       toast.success("Success", {
-        //         position: "top-center",
-        //         autoClose: 3000,
-        //         hideProgressBar: true,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //       });
-        //       handleClose();
-        //     }
-        //   }
-        // } else {
-        //   if (dollarAmount <= 0) {
-        //     toast.error(`Enter Valid ${activeTab.value} Amount`, {
-        //       position: "top-center",
-        //       autoClose: 3000,
-        //       hideProgressBar: true,
-        //       closeOnClick: true,
-        //       pauseOnHover: true,
-        //       draggable: true,
-        //       progress: undefined,
-        //     });
-        //   } else {
-        //     // console.log("buying with busd without referral code");
-
-        //     await buyWithBusd(
-        //       0,
-        //       dollarAmount,
-        //       "0x0000000000000000000000000000000000000000000000000000000000000000"
-        //     );
-        //     toast.success("Success", {
-        //       position: "top-center",
-        //       autoClose: 3000,
-        //       hideProgressBar: true,
-        //       closeOnClick: true,
-        //       pauseOnHover: true,
-        //       draggable: true,
-        //       progress: undefined,
-        //     });
-        //     handleClose();
-        //   }
-        //   // console.log("no referral");
-        // }
+      if (!isConnected) {
+        console.log(isConnected,'isConnected')
+        console.error('Please connect your wallet before proceeding.');
+        return;
       }
+  
+
+      let stablecoinAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF"
+
+      write({
+        args: [BigInt(dollarAmount), stablecoinAddress],
+      });
+      
     } catch (err) {
       const errormessage = err.toString();
       console.log(errormessage);
@@ -237,11 +130,13 @@ const BuyNow = (props) => {
 
   const handleDollarChange = async (e) => {
     let temp = e.target.value;
-    if (temp >= 0) {
-      let buyerReceives =
-        (temp * 10 ** 18) / ethers.utils.parseEther(`${stagePrice}`);
-      // console.log(buyerReceives);
-      setReceivingTokens(buyerReceives);
+    if(temp > 0) {
+     
+      let buyerReceives  = temp/ pricepertoken
+       setReceivingTokens(buyerReceives)
+    }
+    else{
+      setReceivingTokens(0)
     }
     setDollarAmount(e.target.value);
   };
@@ -291,10 +186,7 @@ const BuyNow = (props) => {
             />
             {activeTab.value === "usdt" && (
               <>
-                <div className="d-flex align-items-center justify-content-between">
-                  <p className="mb-0 subtle-text">Have a referral code? </p>
-                  <ToggleButton on={hasReferral} setOnState={setHasReferral} />
-                </div>
+                
                 <div className={hasReferral ? "show-input" : "hide-input"}>
                   <input
                     type="text"
@@ -316,11 +208,11 @@ const BuyNow = (props) => {
                 />
                 <p className="mb-0 subtle-text">
                   {" "}
-                  <p className="mb-0 subtle-text"> ${stagePrice} = 1 CRNT</p>
+                  <p className="mb-0 subtle-text"> ${pricepertoken} = 1 CRNT</p>
                 </p>
                 <p className="mb-0 text-end subtle-text">
                   You'll get:{" "}
-                  {receivingTokens - (receivingTokens * 0.1).toLocaleString()}{" "}
+                  {receivingTokens}{" "}
                   CRNT
                 </p>
                 <p className="mb-0 text-end subtle-text tnc2">
@@ -353,11 +245,11 @@ const BuyNow = (props) => {
                   className="my-3 custom-input number-input"
                   onChange={(e) => handleDollarChange(e)}
                 />
-                <p className="mb-0 subtle-text"> ${stagePrice} = 1 CRNT</p>
+                <p className="mb-0 subtle-text"> ${pricepertoken} = 1 CRNT</p>
 
                 <p className="mb-0 text-end subtle-text">
                   You'll get:{" "}
-                  {receivingTokens - (receivingTokens * 0.1).toLocaleString()}{" "}
+                  {receivingTokens}{" "}
                   CRNT
                 </p>
                 <p className="mb-0 text-end subtle-text tnc2">
