@@ -1,0 +1,33 @@
+{
+    "env": {
+      "es2020": true,
+      "browser": true,
+      "node": true,
+      "mocha": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:react/jsx-runtime"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "plugins": ["react"],
+    "globals": {
+      "BigInt": true
+    },
+    "rules": {
+        "no-unused-vars": "warn",
+        "no-console": "off",
+        "react/no-unescaped-entities": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off",
+        "react/no-unknown-property": "off",
+        "react/jsx-no-target-blank": "off",  // Disabled the rule to stop seeing the warning
+        "react/jsx-key": "warn",
+        "no-constant-condition": "warn"
+      }
+  }
+  

@@ -4,13 +4,110 @@ import bannerImg from "../../assets/img/banner/banner_img.png";
 import { Link } from "react-router-dom";
 import { handleClickScroll } from "../../lib/helpers";
 import fireIcon from "../../assets/img/icon/fire.png";
+import { icoAbi } from "../../utils/constants";
+import { icoAddress } from "../../utils/constants";
+import { useContractRead } from 'wagmi'
+
+import BuyNow from "../Buttons/BuyNow";
 import { useContext } from "react";
 import { IcoContext } from "../../contexts/context";
 import { ethers } from "ethers";
+import ConnectWallet from "../Buttons/ConnectWallet";
 
 const BannerTwo = () => {
   const [percentRaised, setPercentRaised] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const { connectWallet, currentAccount } = useContext(IcoContext);
+
+  // let targetRaised;
+  const [targetRaised, setTargetRaised] = useState(0);
+  let stageRaised0 = 0;
+  let stageRaised1 = 0;
+  let stageRaised2 = 0;
+
+  const {
+      data: currentStageData,
+      isError: isCurrentStageError,
+      isLoading: isCurrentStageLoading,
+    } = useContractRead({
+      address: icoAddress,
+      abi: icoAbi,
+      functionName: "currentStage",
+    });
+
+    const {
+      data: stageDetailsData,
+      isError: isStageDetailsError,
+      isLoading: isStageDetailsLoading,
+    } = useContractRead({
+      address: icoAddress,
+      abi: icoAbi,
+      functionName: "stages",
+      args: [`${currentStageData}`], // Pass currentStage only when available
+    });
+
+    let pricepertoken
+    if(stageDetailsData){
+      pricepertoken = stageDetailsData[2];
+      pricepertoken = Number(pricepertoken)/1000000000000000000 
+    }
+
+  //   console.log(typeof(currentStageData),'type of current stage')
+      const {
+        data: stageDetailsData0,
+        isError: isStageDetailsError0,
+        isLoading: isStageDetailsLoading0,
+      } = useContractRead({
+        address: icoAddress,
+        abi: icoAbi,
+        functionName: "stages",
+        args: ["0"], // Pass currentStage only when available
+      });
+      if(stageDetailsData0 ){
+        stageRaised0 = stageDetailsData0[5]
+        stageRaised0= Number(stageRaised0)
+      }
+    
+
+      const {
+        data: stageDetailsData1,
+        isError: isStageDetailsError1,
+        isLoading: isStageDetailsLoading1,
+      } = useContractRead({
+        address: icoAddress,
+        abi: icoAbi,
+        functionName: "stages",
+        args: ["1"], // Pass currentStage only when available
+      });
+      if(stageDetailsData1){
+        stageRaised1 = stageDetailsData1[5]
+        stageRaised1= Number(stageRaised1)
+      }
+     
+      const {
+        data: stageDetailsData2,
+        isError: isStageDetailsError2,
+        isLoading: isStageDetailsLoading2,
+      } = useContractRead({
+        address: icoAddress,
+        abi: icoAbi,
+        functionName: "stages",
+        args: ["2"], // Pass currentStage only when available
+      });
+      if(stageDetailsData2){
+        stageRaised2 = stageDetailsData2[5]
+      stageRaised2= Number(stageRaised2)
+      }
+      
+
+      // setTargetRaised(stageRaised1+stageRaised1+stageRaised2)
+      let totalRagetRaised = stageRaised1+stageRaised1+stageRaised2
+
+      console.log(totalRagetRaised,'totalRagetRaised')
+    
+
+    
+
 
   const {
     stagePrice,
@@ -74,7 +171,7 @@ const BannerTwo = () => {
                     </div>
 
                     <h6 className="title" style={{marginTop:'-2rem'}}>Explore our  <span>AI </span> Platform </h6>
-                  <div style={{marginTop:'-3rem'}}> 
+                  <div style={{marginTop:'-3rem',display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
                     <a
                       href="https://creationnetwork.ai"
                       target="_blank"
@@ -92,6 +189,7 @@ const BannerTwo = () => {
                           cursor: "pointer",
                           transition: "0.5s",
                           borderRadius: "7px",
+                          marginBottom:'1rem'
                         }}
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
@@ -100,6 +198,31 @@ const BannerTwo = () => {
                       </button>
                     </a>
 
+                    {/* {currentAccount == null? (
+                        <>
+                        
+
+                          <li className="header-btn">
+                           
+                            <ConnectWallet />
+                          </li>
+                        </>
+                      ) : (
+                        <div style={{display:'flex ', justifyContent:'center' , alignItems:'center'}}>
+                          <li className="header-lang">
+                            {`${currentAccount?.slice(
+                              0,
+                              5
+                            )}...${currentAccount?.slice(
+                              currentAccount?.length - 4
+                            )}`}
+                          </li>
+
+                          <li className="header-btn">
+                            <BuyNow label={"Buy Now"}  />
+                          </li>
+                        </div>
+                      )} */}
                     </div>
                   </div>
                   <div className="banner-progress-wrap" style={{marginTop:'2rem'}}>
@@ -144,7 +267,7 @@ const BannerTwo = () => {
                       />
                     </div>
                     <h4 className="target-banner title text-uppercase">
-                      {percentRaised}% Target Raised
+                      {totalRagetRaised} Target Raised
                       <span
                         style={{
                           color: `${colorScales[currentStage]}`,
@@ -152,7 +275,7 @@ const BannerTwo = () => {
                       >
                         {" "}
                         {/* ${ethers.utils.formatEther(`${stagePrice}`)} = 1 CRNT */}
-                        $ {stagePrice} = 1 CRNT
+                        $ {pricepertoken} = 1 CRNT
                       </span>
                     </h4>
                   </div>

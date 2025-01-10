@@ -1,16 +1,58 @@
-import React, { useEffect, useState } from "react";
-import StakingABI from "../.././contractabi/Staking.json";
+import React, {  useState } from "react";
+// import StakingABI from "../.././contractabi/Staking.json";
 // require('dotenv').config();
+import { stakingAbi } from "../../utils/constants";
+import { stakingAddress } from "../../utils/constants";
+import { vestingAbi } from "../../utils/constants";
+import { vestingAddress } from "../../utils/constants";
+// import { useContractWrite, } from 'wagmi';
+import { useContractRead,useContractWrite,useConnect, useAccount } from 'wagmi'
+// import { ethers } from 'ethers';
 import ScrollAnimation from "react-animate-on-scroll";
 const { Web3 } = require("web3");
 
 const Staking = () => {
-  const web3 = new Web3(window.ethereum);
+  // const web3 = new Web3(window.ethereum);
+
+  // const { data: hash, writeContract } = useWriteContract()
 
   const [stakeBalance, setStakeBalance] = useState(999900.0);
   const [stakeInput, setStakeInput] = useState(0);
   const [unstakeInput, setUnstakeInput] = useState(0);
   const [claimableReward, setClaimableReward] = useState(0.3);
+
+  
+    const { connect, connectors } = useConnect();
+    const { isConnected } = useAccount();
+
+  // const{write} = useContractWrite({
+  //   address: stakingAddress,
+  //   stakingAbi,
+  //   functionName: 'stake',
+  //   args: [BigInt(stakeInput)],
+  // })
+
+   const { data:stakedata, isLoadings:stakeisloading, isSuccess:stakeIsSuccess, write: stake } = useContractWrite({
+            address: stakingAddress,
+            abi: stakingAbi,
+            functionName: 'stake',
+          });
+
+          const { data:unstakedata, isLoadings:unstakeisloading, isSuccess:unstakeIsSuccess, write: unstake } = useContractWrite({
+            address: stakingAddress,
+            abi: stakingAbi,
+            functionName: 'withdraw',
+          });
+          const { data:rewarddata, isLoadings:rewardisloading, isSuccess:rewardIsSuccess, write: reward } = useContractWrite({
+            address: stakingAddress,
+            abi: stakingAbi,
+            functionName: 'claimRewards',
+          });
+          const { data:vestingdata, isLoadings:vestingisloading, isSuccess:vestingIsSuccess, write: vesting } = useContractWrite({
+            address: vestingAddress,
+            abi: vestingAbi,
+            functionName: 'releaseTokens',
+          });
   // const [seconds, setSeconds] = useState(60);
 
   // useEffect(() => {
@@ -32,71 +74,45 @@ const Staking = () => {
 
   // Placeholder functions for actions
   const handleStake = async () => {
-    // Logic for staking tokens
-    const contractAddress = process.env.STAKINGADDRESS;
-    const contract = new web3.eth.Contract(StakingABI, contractAddress);
-    const accounts = await web3.eth.getAccounts();
-    const userAccount = accounts[0];
+    try{
 
-    const tx = await contract.methods
-      .stake(stakeInput)
-      .send({ from: userAccount });
-    console.log("Transaction successful:", tx);
+      stake({
+        args: [BigInt(stakeInput)],
+      });
 
-    console.log(`Staking ${stakeInput} tokens`);
+    }catch(error) {
+      console.log('error with transaction', error)
+    }
   };
-
   const handleUnstake = async () => {
-    // Logic for unstaking tokens
-    const contractAddress = process.env.STAKINGADDRESS;
-    const contract = new web3.eth.Contract(StakingABI, contractAddress);
-    const accounts = await web3.eth.getAccounts();
-    const userAccount = accounts[0];
-
-    const tx = await contract.methods
-      .withdraw(stakeInput)
-      .send({ from: userAccount });
-    console.log("Transaction successful:", tx);
-
-    console.log(`Staking ${stakeInput} tokens`);
-    console.log(`Unstaking ${unstakeInput} tokens`);
+    try{
+      unstake({
+        args: [BigInt(stakeInput)]
+      })
+    }
+    catch(error){
+      console.log(error,'error during unstake')
+    }
   };
+
+  const handleVesting = async() => {
+    try{
+      vesting();
+
+    }
+    catch(error) {
+      console.log(error,'error')
+    }
+  }
 
   const handleClaimReward = async () => {
-    // Logic for claiming reward tokens
-    const contractAddress = process.env.STAKINGADDRESS;
-    const contract = new web3.eth.Contract(StakingABI, contractAddress);
-    const accounts = await web3.eth.getAccounts();
-    const userAccount = accounts[0];
-
-    const tx = contract.methods.claimRewards();
-
-    // Estimate gas for the transaction
-    const gas = await tx.estimateGas({ from: userAccount });
-
-    // Set up the transaction data
-    const txData = {
-      from: userAccount,
-      to: contractAddress,
-      data: tx.encodeABI(),
-      gas,
-      gasPrice: web3.utils.toWei("20", "gwei"), // Adjust gas price if needed
-    };
-    try {
-      // Sign the transaction with your private key
-      const signedTx = await web3.eth.accounts.signTransaction(
-        txData,
-        userAccount.privateKey
-      );
-
-      // Send the signed transaction
-      const receipt = await web3.eth.sendSignedTransaction(
-        signedTx.rawTransaction
-      );
-      console.log("Transaction receipt:", receipt); // Log the transaction receipt
-    } catch (error) {
-      console.error("Error claiming rewards:", error); // Log any errors
+    try{
+      reward();
     }
+    catch(error) {
+      console.log('error',error)
+    }
+ 
   };
 
   return (
@@ -190,6 +206,7 @@ const Staking = () => {
                 backgroundColor: "#007bff",
                 borderColor: "#007bff",
               }}
+              onClick={handleVesting}
             >
               Release Token
             </button>

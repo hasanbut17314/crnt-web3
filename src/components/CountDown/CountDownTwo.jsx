@@ -4,10 +4,54 @@ import { useContext } from "react";
 import { IcoContext } from "../../contexts/context";
 import moment from "moment/moment";
 import ScrollAnimation from "react-animate-on-scroll";
+import { useContractRead } from 'wagmi'
+import { icoAbi } from "../../utils/constants";
+import { icoAddress } from "../../utils/constants";
 const CountDownTwo = () => {
   const { currentStage, preSaleStartTime, publicSaleStartTime=6499 } =
     useContext(IcoContext);
-    console.log(publicSaleStartTime,'puvlicSaleStart')
+    // console.log(publicSaleStartTime,'puvlicSaleStart')
+
+  //  const [mycurrentStage, setMycurrentStage] = useState(null);
+  // const [stagestart, setStagestart] = useState(0);
+  let stagestart;
+  let stageDays;
+  let tokenRaised;
+ 
+
+   const {
+    data: currentStageData,
+    isError: isCurrentStageError,
+    isLoading: isCurrentStageLoading,
+  } = useContractRead({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "currentStage",
+  });
+    // setMycurrentStage(data);
+    // console.log(currentStageData,'currentStageData')
+    
+      const {
+        data: stageDetailsData,
+        isError: isStageDetailsError,
+        isLoading: isStageDetailsLoading,
+      } = useContractRead({
+        address: icoAddress,
+        abi: icoAbi,
+        functionName: "stages",
+        args: [`${currentStageData}`], // Pass currentStage only when available
+      });
+      if(stageDetailsData){
+        // setStagestart(stageDetailsData[5])
+        stagestart = stageDetailsData[4]
+         stagestart = Number(stagestart)*1000;
+        
+        // timeDifference = stageStartMs - now;
+        stageDays = stageDetailsData[3]
+        stageDays = Number(stageDays) / 86400;
+        tokenRaised = stageDetailsData[5]
+        tokenRaised= Number(tokenRaised)
+      }    
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -77,12 +121,17 @@ const CountDownTwo = () => {
                     <>
                     <div style={{ backgroundColor: '#041235', padding: '30px 50px', borderRadius:'20px', textAlign:'center' }}>
                        <h5 className="title" style={{ marginBottom: '8px', color:'white'}}>token raised </h5>
-                       <p style={{color:'wheat'}} >0 </p>
+                       <p style={{color:'wheat'}} >{tokenRaised?tokenRaised:0}</p>
                      </div>
-                      <Countdown
-                        date={Date.now() +  23 * 24 * 60 * 60 * 1000 }
-                        renderer={renderer}
-                      />
+                     {stageDetailsData != undefined?
+                       <Countdown
+                      //  date={Date.now() +  20 * 24 * 60 * 60 * 1000 }
+                       date={stagestart + stageDays * 24 * 60 * 60 * 1000}
+                       renderer={renderer}
+                     />
+                     :''
+                     }
+                     
                       </>
                     )
                   : ""}

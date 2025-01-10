@@ -3,7 +3,7 @@ import React from 'react';
 const roadmapItems = [
   {
     id: 1,
-    label: "Q1 2023",
+    label: "Q3 2024",
     list: [
       {
         id: 1,
@@ -17,7 +17,7 @@ const roadmapItems = [
   },
   {
     id: 2,
-    label: "Q2 2024",
+    label: "Q4 2024",
     list: [
       {
         id: 1,
@@ -28,7 +28,7 @@ const roadmapItems = [
   },
   {
     id: 3,
-    label: "Q3 2024",
+    label: "Q1 2025",
     list: [
       {
         id: 1,
@@ -46,7 +46,7 @@ const roadmapItems = [
   },
   {
     id: 4,
-    label: "Q4 2024 – I",
+    label: "Q2 2025",
     list: [
       {
         id: 1,
@@ -56,7 +56,7 @@ const roadmapItems = [
   },
   {
     id: 5,
-    label: "Q4 2024 – I I",
+    label: "Q3 2025",
     list: [
       {
         id: 1,
@@ -66,7 +66,7 @@ const roadmapItems = [
   },
   {
     id: 6,
-    label: "Q1 2025",
+    label: "Q4 2025",
     list: [
       {
         id: 1,
@@ -76,7 +76,7 @@ const roadmapItems = [
   },
   {
     id: 7,
-    label: "Q2 2025",
+    label: "Q1 2026",
     list: [
       {
         id: 1,
@@ -86,7 +86,7 @@ const roadmapItems = [
   },
   {
     id: 8,
-    label: "Q3 2025",
+    label: "Q2 2026",
     list: [
       {
         id: 1,
@@ -96,7 +96,7 @@ const roadmapItems = [
   },
   {
     id: 9,
-    label: "Q4 2025",
+    label: "Q3 2026",
     list: [
       {
         id: 1,
@@ -106,7 +106,7 @@ const roadmapItems = [
   },
   {
     id: 10,
-    label: "Q1 2026",
+    label: "Q4 2026",
     list: [
       {
         id: 1,
@@ -116,7 +116,7 @@ const roadmapItems = [
   },
   {
     id: 11,
-    label: "Q2 2026",
+    label: "Q1 2027",
     list: [
       {
         id: 1,

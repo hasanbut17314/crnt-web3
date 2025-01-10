@@ -49,7 +49,7 @@ const WhitePaper = () => {
                   <a
                     className="btn btn-two"
                     href={
-                      "https://drive.google.com/file/d/1Eh5_iC_SWjbplpd7GyP1a8-_M1hu5X0E/view?usp=sharing"
+                      "https://drive.google.com/file/d/1khymziGFiKfxpHYE3yr4yCtFom4Cfd4q/view?pli=1"
                     }
                     target="_blank"
                   >
@@ -73,7 +73,7 @@ const WhitePaper = () => {
                   />
                 </Modal> */}
                   <a
-                    href={`https://drive.usercontent.google.com/u/0/uc?id=1Eh5_iC_SWjbplpd7GyP1a8-_M1hu5X0E&export=download`}
+                    href={`https://drive.usercontent.google.com/u/0/uc?id=1khymziGFiKfxpHYE3yr4yCtFom4Cfd4q&export=download`}
                     download={"CRNT Whitepaper"}
                     className="btn btn-two"
                     style={{ marginLeft: "5px" }}
