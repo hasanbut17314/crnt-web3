@@ -1,0 +1,18 @@
+.releaseBtn{
+  max-width: fit-content;
+}
+.realeasToken{
+  border: 2px solid #01C3F4;
+}
+
+@media (min-width: 768px) {
+    .form1 {
+      width: 300px; /* Change this value as per your requirement */
+    }
+    .select{
+        width: 300px;
+    }
+    .buybtn{
+      max-width: fit-content;
+    }
+  }

@@ -6,7 +6,7 @@ import HomeTwo from "./pages/Home/HomeTwo";
 import Blog from "./pages/Blog/Blog";
 import BlogDetailsPage from "./pages/BlogDetails/BlogDetailsPage";
 import LoadingOverlay from "react-loading-overlay";
-import { IcoContext } from "./contexts/context";
+// import { IcoContext } from "./contexts/context";
 import { useContext } from "react";
 
 import { ProjectId } from "./utils/constants";
@@ -40,7 +40,7 @@ const wagmiConfig = createConfig({
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 function App() {
-  const { isLoading } = useContext(IcoContext);
+  // const { isLoading } = useContext(IcoContext);
 
   const { pathname } = useLocation();
   useEffect(() => {

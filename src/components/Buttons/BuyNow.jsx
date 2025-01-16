@@ -77,6 +77,7 @@ const BuyNow = (props) => {
           abi: icoAbi,
           functionName: 'buyTokens',
         });
+        
 
   const handleClose = () => {
     setShow(false);

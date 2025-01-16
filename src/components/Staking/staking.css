@@ -1,0 +1,15 @@
+.claimreward{
+    border: none;
+    background-color: #F6F6F6;
+}
+.stakingcard{
+    border: none;
+    background-color: #F6F6F6;
+}
+.myrow{
+    background-color: #F6F6F6;
+    padding: 2rem;
+    border: 2px solid #007bff; /* Adds a border with blue color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a soft shadow */
+    
+}

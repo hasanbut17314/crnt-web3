@@ -10,6 +10,7 @@ import { useContractRead,useContractWrite,useConnect, useAccount } from 'wagmi'
 // import { ethers } from 'ethers';
 import ScrollAnimation from "react-animate-on-scroll";
 const { Web3 } = require("web3");
+import './staking.css'
 
 const Staking = () => {
   // const web3 = new Web3(window.ethereum);
@@ -118,12 +119,12 @@ const Staking = () => {
   return (
     <ScrollAnimation animateIn="fadeInUp">
       <div className="container mb-5 mt-4 overflow-hidden">
-        <p className="text-center mb-4">Staking</p>
+      <h3 className="text-center mb-4 text-primary">Staking</h3>
 
         {/* <p className="my-4">Earn Reward Token</p> */}
-        <div className="row">
+        <div className="row myrow">
           <div className="col-md-6 ">
-            <div className="card p-3" style={{ backgroundColor: "#E6E6FA" }}>
+            <div className="card stakingcard p-3">
               <p>100.0 CRNT STAKE</p>
               <div className="input-group mb-2">
                 <input
@@ -168,9 +169,15 @@ const Staking = () => {
               </div>
             </div>
           </div>
+          <div
+          className="col-md-1 d-none d-md-flex align-items-center justify-content-center"
+          style={{ borderLeft: '2px solid #01C3F4' }}
+        >
+          {/* Divider */}
+        </div>
 
-          <div className="col-md-6">
-            <div className="card p-3" style={{ backgroundColor: "#E6E6FA" }}>
+          <div className="col-md-5">
+            <div className="card claimreward p-3">
               <p>Reward Token:</p>
               <p>{claimableReward} CRNT</p>
               <button
@@ -184,7 +191,7 @@ const Staking = () => {
             </div>
           </div>
         </div>
-        <div
+        {/* <div
           className="row  p-4 rounded bg-white"
           style={{
             boxShadow: "0 1px 1px rgba(0, 0, 0, 0.1)",
@@ -211,7 +218,7 @@ const Staking = () => {
               Release Token
             </button>
           </div>
-        </div>
+        </div> */}
         {/* <div className="row">
           <div className="col-md-6 d-flex justify-content-center align-items-center mt-3">
             <p>MAX Stack Ammount 44,280,000.00 CRNT</p>

@@ -30,6 +30,7 @@ import Distribution from "../../components/Distribution/Distribution";
 import About4 from "../../components/About/About4";
 import Distribution2 from "../../components/Distribution/Distribution2";
 import Staking from "../../components/Staking/Staking";
+import Ico from "../../components/ico/Ico";
 import './Home.css'
 
 // const CountDownTwo = React.lazy(() => import("../../components/CountDown/CountDownTwo"));
@@ -44,6 +45,9 @@ const HomeTwo = () => {
         <BannerTwo />
         {/* <Banner /> */}
         <CountDownTwo />
+        <Ico/>
+       
+        
         <Staking/>
         <WhyChooseUsTwo />
         <About />
