@@ -118,7 +118,7 @@ const Staking = () => {
 
   return (
     <ScrollAnimation animateIn="fadeInUp">
-      <div className="container mb-5 mt-4 overflow-hidden">
+      <div className="container mb-5  overflow-hidden" id="stake">
       <h3 className="text-center mb-4 text-primary">Staking</h3>
 
         {/* <p className="my-4">Earn Reward Token</p> */}
