@@ -75,11 +75,15 @@ const HeaderTwo = () => {
   // scroll to element by id
   const handleClickScroll = (id) => {
     const element = document.getElementById(id);
-    if (element) {
+  
+    if (element ) {
+
       // 👇 Will scroll smoothly to the top of the next section
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: "smooth",block: 'start',inline: 'nearest', });
+      // element.scrollIntoView(false);
     }
   };
+ 
 
   // active link switching
   const { hash, pathname } = useLocation();
@@ -120,12 +124,15 @@ const HeaderTwo = () => {
                   </div>
                   <div className="navbar-wrap main-menu d-none d-lg-flex">
                     <ul className="navigation">
+                    
+                      
                       <li
                         className={cn(
                           hash == "" && "active",
                           " menu-item-has-children"
                         )}
                       >
+                        
                         <Link
                           to="/#home"
                           className="section-link"
@@ -134,6 +141,24 @@ const HeaderTwo = () => {
                           Home
                         </Link>
                   
+                      </li>
+                      <li className={cn(hash == "#ico" && "active")}>
+                        <Link
+                          to="/#ico"
+                          className="section-link"
+                          onClick={() => handleClickScroll("ico")}
+                        >
+                          Buy/Claim
+                        </Link>
+                      </li>
+                      <li className={cn(hash == "#stake" && "active")}>
+                        <Link
+                          to="/#stake"
+                          className="section-link"
+                          onClick={() => handleClickScroll("stake")}
+                        >
+                          stake
+                        </Link>
                       </li>
                       <li className={cn(hash == "#about" && "active")}>
                         <Link

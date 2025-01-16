@@ -21,20 +21,10 @@ const Ico = () => {
   const { connectWallet, currentAccount } = useContext(IcoContext);
   const [userStage, setUserStage] = useState(0);
 
-  const [amountInUSD, setAmountInUSD] = useState('');
+
   const [tokens, setTokens] = useState(0);
   const tokenRate = 0.01;
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setAmountInUSD(value);
 
-    // Calculate tokens based on the input
-    if (!isNaN(value) && value > 0) {
-      setTokens(value / tokenRate);
-    } else {
-      setTokens(0);
-    }
-  };
 
   const { connect, connectors } = useConnect();
   const { isConnected } = useAccount();
@@ -90,6 +80,24 @@ const Ico = () => {
     enabled: !!currentAccount,
   });
 
+  let userBalance = 0;
+  if(originalStagePurchase !=undefined){
+    userBalance = Number(originalStagePurchase);
+  }
+  console.log(originalStagePurchase,'originalStagePurchase')
+
+  const {
+    data: stagePurchases,
+    isError: stagePurchasesError,
+    isLoading: stagePurchasesIsLoading,
+  } = useContractRead({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "stagePurchases",
+    args: [currentAccount, userStage],
+    enabled: !!currentAccount,
+  });
+
   const {
     data: lastClaimTimestamp,
     isError: lastCliamError,
@@ -105,6 +113,7 @@ const Ico = () => {
   let lastClaimHour = 0;
   let lastClaimMin = 0;
   let lastClaimsec = 0;
+  let lastClaimday = 0;
 
   let locked=false;
 
@@ -114,6 +123,7 @@ const Ico = () => {
     const currentTime = Math.floor(Date.now() / 1000);
     timeDifference = currentTime - lastClaimTime;
 
+    lastClaimday = Math.floor(timeDifference / 86400);
     lastClaimHour = Math.floor(timeDifference / 3600); // 1 hour = 3600 seconds
     lastClaimMin = Math.floor((timeDifference % 3600) / 60); // Remaining minutes
     lastClaimsec = timeDifference % 60; // Remaining seconds
@@ -133,9 +143,13 @@ const Ico = () => {
     crntAmount = Number(originalStagePurchase);
     crntAmount = (crntAmount * 25) / 100;
   }
+  const handleStageChange = (e) => {
+    setUserStage(parseInt(e.target.value)); // Update the userStage state with the selected value
+  };
+  console.log(userStage,'userStage')
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" id="ico">
       <h3 className="text-center mb-4 text-primary">Buy Token</h3>
       <div
         className="row justify-content-center myrow"
@@ -199,7 +213,7 @@ const Ico = () => {
                   type="text"
                   className="form-control"
                   id="totalCrntToken"
-                  value="0 CRNT"
+                  value={userBalance}
                   readOnly
                 />
               </div>
@@ -207,7 +221,7 @@ const Ico = () => {
                 <label htmlFor="investedStage" className="form-label">
                   Invested in stage
                 </label>
-                <select className="form-select" id="investedStage">
+                <select className="form-select" id="investedStage" value={userStage}  onChange={handleStageChange}>
                   <option value="0">Stage1</option>
                   <option value="1">Stage2</option>
                   <option value="2">Stage3</option>
@@ -221,7 +235,7 @@ const Ico = () => {
                   type="text"
                   className="form-control"
                   id="lockedToken"
-                  value="0 CRNT"
+                  value={userBalance}
                   readOnly
                 />
               </div>
@@ -233,20 +247,21 @@ const Ico = () => {
                   type="text"
                   className="form-control"
                   id="readyToReissueToken"
-                  value="0 CRNT"
+                  value={crntAmount}
                   readOnly
                 />
               </div>
             </div>
             
             <div className="col-12 col-md-6 d-flex flex-column align-items-center justify-content-center">
-            <input
+            {/* <input
                   type="text"
                   className="form-control"
                   id="readyToReissueToken"
                   value="0 CRNT"
-                  readOnly
-                />
+                  
+                /> */}
+                <p>Token wil be unlock in {lastClaimHour}  </p>
               <button className="btn btn-primary mt-4 releaseBtn"  style={{
               backgroundColor: '#01C3F4',
               border: 'none',
