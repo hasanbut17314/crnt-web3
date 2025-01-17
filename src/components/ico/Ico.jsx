@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './ico.css'
+import "./ico.css";
 import { icoAbi } from "../../utils/constants";
 import { icoAddress } from "../../utils/constants";
 import { useContext } from "react";
@@ -12,23 +12,22 @@ import {
 import { IcoContext } from "../../contexts/context";
 import { flare } from "wagmi/chains";
 import { ToastContainer, toast } from "react-toastify";
+import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 const { Web3 } = require("web3");
 const web3 = new Web3(window.ethereum);
 
 const Ico = () => {
   const [dollarAmount, setDollarAmount] = useState("");
   const [receivingTokens, setReceivingTokens] = useState(0);
-//   const [locked, setLocked] = useState(false);
+  //   const [locked, setLocked] = useState(false);
   const { connectWallet, currentAccount } = useContext(IcoContext);
   const [userStage, setUserStage] = useState(0);
-
 
   const [tokens, setTokens] = useState(0);
   const tokenRate = 0.01;
 
-
   const { connect, connectors } = useConnect();
-  const { isConnected,address } = useAccount();
+  const { isConnected, address } = useAccount();
 
   console.log(address, "address");
 
@@ -82,7 +81,7 @@ const Ico = () => {
   });
 
   let userBalance = 0;
-  if(originalStagePurchase !=undefined){
+  if (originalStagePurchase != undefined) {
     userBalance = Number(originalStagePurchase);
   }
 
@@ -98,18 +97,27 @@ const Ico = () => {
     enabled: !!currentAccount,
   });
 
-  const { data:buyToken, isLoadings, isSuccess, write:writeBuyToken } = useContractWrite({
-            address: icoAddress,
-            abi: icoAbi,
-            functionName: 'buyTokens',
-          });
+  const {
+    data: buyToken,
+    isLoadings,
+    isSuccess,
+    write: writeBuyToken,
+  } = useContractWrite({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "buyTokens",
+  });
 
-          const { data:claimToken, isLoadings:claimTokenLoading, isSuccess:claimTokenSuccess, write:writeClaimToken } = useContractWrite({
-            address: icoAddress,
-            abi: icoAbi,
-            functionName: 'claimTokens',
-          });
-
+  const {
+    data: claimToken,
+    isLoadings: claimTokenLoading,
+    isSuccess: claimTokenSuccess,
+    write: writeClaimToken,
+  } = useContractWrite({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "claimTokens",
+  });
 
   const {
     data: lastClaimTimestamp,
@@ -128,7 +136,7 @@ const Ico = () => {
   let lastClaimsec = 0;
   let lastClaimday = 0;
 
-  let locked=false;
+  let locked = false;
 
   if (lastClaimTimestamp != 0) {
     let timeDifference = 0;
@@ -142,17 +150,16 @@ const Ico = () => {
     lastClaimsec = timeDifference % 60; // Remaining seconds
 
     if (timeDifference >= 30 * 24 * 60 * 60) {
-        locked = false; // Unlock the button
+      locked = false; // Unlock the button
     } else {
-        locked= true; // Keep the button locked
+      locked = true; // Keep the button locked
     }
   } else if (Number(originalStagePurchase) == 0) {
     locked = false;
     lastClaimday = 0;
-    lastClaimHour= 0;
-    lastClaimMin=0;
+    lastClaimHour = 0;
+    lastClaimMin = 0;
     lastClaimsec = 0;
-
   }
 
   let crntAmount = 0;
@@ -164,281 +171,156 @@ const Ico = () => {
   const handleStageChange = (e) => {
     setUserStage(parseInt(e.target.value)); // Update the userStage state with the selected value
   };
- 
+
   const handleClaimToken = async () => {
-    try{
-      if(!isConnected){
-        console.log(isConnected,'isConnected');
-        console.log('please connect your metamast')
+    try {
+      if (!isConnected) {
+        console.log(isConnected, "isConnected");
+        console.log("please connect your metamast");
         return;
       }
       writeClaimToken({
         args: [userStage],
-      })
+      });
+    } catch (err) {
+      console.log(err, "error during claiming");
+      const errormessage = err.toString();
+      console.log(errormessage);
+      const reasonMatch = errormessage.match(/reason="([^"]+)"/);
+      const reason = reasonMatch ? reasonMatch[1] : "Failed";
+      console.log(reason);
+
+      toast.error(reason, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
-    catch(err){
-      console.log(err,'error during claiming')
-        const errormessage = err.toString();
-            console.log(errormessage);
-            const reasonMatch = errormessage.match(/reason="([^"]+)"/);
-            const reason = reasonMatch ? reasonMatch[1] : "Failed";
-            console.log(reason);
-      
-            toast.error(reason, {
-              position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-    }
-  }
+  };
 
   const handleBuy = async (activeTab, amount) => {
-      try {  
-        if (!isConnected) {
-          console.log(isConnected,'isConnected')
-          console.error('Please connect your wallet before proceeding.');
-          return;
-        }
-    
-  
-        let stablecoinAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF"
-  
-        writeBuyToken({
-          args: [BigInt(dollarAmount), stablecoinAddress],
-        });
-        
-      } catch (err) {
-        const errormessage = err.toString();
-        console.log(errormessage);
-        const reasonMatch = errormessage.match(/reason="([^"]+)"/);
-        const reason = reasonMatch ? reasonMatch[1] : "Failed";
-        console.log(reason);
+    try {
+      if (!isConnected) {
+        console.log(isConnected, "isConnected");
+        console.error("Please connect your wallet before proceeding.");
+        return;
       }
-    };
+
+      let stablecoinAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF";
+
+      writeBuyToken({
+        args: [BigInt(dollarAmount), stablecoinAddress],
+      });
+    } catch (err) {
+      const errormessage = err.toString();
+      console.log(errormessage);
+      const reasonMatch = errormessage.match(/reason="([^"]+)"/);
+      const reason = reasonMatch ? reasonMatch[1] : "Failed";
+      console.log(reason);
+    }
+  };
 
   return (
-    <div className="container mt-5" id="ico">
-      <h3 className="text-center mb-4 text-primary">Buy Token</h3>
-      <div
-        className="row justify-content-center myrow"
-        style={{
-          borderRadius: '8px',
-          padding: '2rem',
-          backgroundColor: '#FAFAFA',
-        }}
-      >
-        <div className="col-md-5 d-flex flex-column align-items-center">
-          <h5 className="mb-3 text-secondary">Buy Token</h5>
-          <input
-            type="number"
-            className="form-control mb-3"
-            placeholder="Amount in USD:"
-            value={dollarAmount}
-            onChange={(e) => handleDollarChange(e)}
-            style={{ maxWidth: '100%' ,margin:'2rem 0'}}
-          />
-          <button
-            className="btn btn-primary buybtn"
-            style={{
-              backgroundColor: '#01C3F4',
-              border: 'none',
-              width: '50%',
-              marginBottom:'1rem'
-            }}
-            onClick={() => {
-              handleBuy(dollarAmount);
-            }}
-          >
-            Buy token
-          </button>
-        </div>
-
-        <div
-          className="col-md-1 d-none d-md-flex align-items-center justify-content-center"
-          style={{ borderLeft: '2px solid #01C3F4' }}
-        >
-          {/* Divider */}
-        </div>
-
-        <div className="col-md-5 d-flex flex-column align-items-center">
-          <h5 className="mb-3 text-secondary" style={{fontSize:'1.5rem'}}>You will receive</h5>
-          <p className="mt-4" style={{fontSize:'1.6rem'}}>${pricepertoken} = 1 CRNT</p>
-          <p className="fw-bold mt-3" style={{fontSize:'2rem'}}>
-            You will get  {'   '}
-            {receivingTokens} CRNT
-          </p>
-        </div>
-      </div>
-
-      <div className="container my-5  p-1">
-      <h3 className="text-center mb-4 text-primary">Claim Token</h3>
-      <div className="card " >
-        <div className="card-body realeasToken">
-          <div className="row" style={{width:'100%'}}>
-            <div className="col-12 col-md-6">
-              <div className="mb-3">
-                <label htmlFor="totalCrntToken" className="form-label">
-                  Total CRNT token in wallet
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="totalCrntToken"
-                  value={userBalance}
-                  readOnly
+    <Container className="py-5">
+      <Row className="justify-content-center align-items-stretch" id="ico">
+        {/* Buy Token Section */}
+        <Col md={5} className="d-flex">
+          <Card className="p-4 shadow-sm w-100 mycard" style={{backgroundColor:'#0412351A'}} >
+            <h4 className="text-center mb-4" style={{ color: "#564DCA" }}>
+              Buy Token
+            </h4>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Amount in USDT:</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter amount in USDT"
+                  onChange={(e) => handleDollarChange(e)}
                 />
+              </Form.Group>
+                <div className="d-grid align-items-center justify-content-center mt-5" >
+                <button
+                className="btn btn-primary releaseBtn"
+                
+                style={{ backgroundColor: "#564DCA", borderColor: "#007bff" }}
+                onClick={() =>handleBuy()}
+              >
+                Buy Token
+              </button>
               </div>
-              <div className="mb-3">
-                <label htmlFor="investedStage" className="form-label">
-                  Invested in stage
-                </label>
-                <select className="form-select" id="investedStage" value={userStage}  onChange={handleStageChange}>
-                  <option value="0">Stage1</option>
-                  <option value="1">Stage2</option>
-                  <option value="2">Stage3</option>
-                </select>
+            </Form>
+            <hr className="my-4" />
+            <p className="text-center fw-bold" style={{fontSize:'2rem',color:'#564DCA'}} >You will receive</p>
+            <p className="text-center" style={{fontSize:'1.2rem'}}>${pricepertoken} = 1 CRNT</p>
+            <p className="text-center text-muted" style={{fontSize:'2rem'}}>You will get {receivingTokens} CRNT</p>
+          </Card>
+        </Col>
+
+        {/* Claim Token Section */}
+        <Col md={5} className="d-flex card2 ">
+          <Card className="p-4 shadow-sm w-100"  style={{backgroundColor:'#0412351A'}}>
+            <h4 className="text-center mb-4" style={{ color: "#564DCA" }}>
+              Claim Token
+            </h4>
+            <Form>
+              <Form.Group className="mb-3 row align-items-center">
+                <Form.Label className=" col-7 col-form-label">
+                  Total CRNT token in wallet:
+                </Form.Label>
+                <div className="col-5">
+                  <Form.Control type="text" placeholder="0 CRNT" readOnly />
+                </div>
+              </Form.Group>
+              <Form.Group className="mb-3 row align-items-center">
+                <Form.Label className="col-7 col-form-label">
+                  Invested in stage:
+                </Form.Label>
+                <div className="col-5">
+                  <Form.Select>
+                    <option value="0">Stage 1</option>
+                    <option value="1">Stage 2</option>
+                    <option value="2">Stage 3</option>
+                  </Form.Select>
+                </div>
+              </Form.Group>
+              <Form.Group className="mb-3 row align-items-center">
+                <Form.Label className="col-7 col-form-label">
+                  Locked token:
+                </Form.Label>
+                <div className="col-5">
+                  <Form.Control type="text" placeholder="0 CRNT" readOnly />
+                </div>
+              </Form.Group>
+              <Form.Group className="mb-3 row align-items-center">
+                <Form.Label  className="col-7 col-form-label" >Ready to release token:</Form.Label>
+                <div className="col-5">
+                <Form.Control type="text" placeholder="0 CRNT" readOnly />
+                </div>
+                
+              </Form.Group>
+              <hr className="my-4" />
+              <Form.Group className="mb-3">
+                {/* <Form.Control type="text" placeholder="0 CRNT" readOnly /> */}
+                <p>Your token will be unlock in 0 days </p>
+              </Form.Group>
+              <div className="d-grid align-items-center justify-content-center" >
+                <button
+                className="btn btn-primary releaseBtn"
+                
+                style={{ backgroundColor: "#564DCA", borderColor: "#007bff" }}
+              >
+                Release Token
+              </button>
               </div>
-              <div className="mb-3">
-                <label htmlFor="lockedToken" className="form-label">
-                  Locked token
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="lockedToken"
-                  value={userBalance}
-                  readOnly
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="readyToReissueToken" className="form-label">
-                  Ready to reissue token
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="readyToReissueToken"
-                  value={crntAmount}
-                  readOnly
-                />
-              </div>
-            </div>
-            
-            <div className="col-12 col-md-6 d-flex flex-column align-items-center justify-content-center">
-            {/* <input
-                  type="text"
-                  className="form-control"
-                  id="readyToReissueToken"
-                  value="0 CRNT"
-                  
-                /> */}
-                <p>Token wil be unlock in {lastClaimHour}  </p>
-              <button className="btn btn-primary mt-4 releaseBtn"  style={{
-              backgroundColor: '#01C3F4',
-              border: 'none',
-            //   width: '60%',
-              marginBottom:'1rem'
-            }} onClick={()=> handleClaimToken()}>Release Token</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    </div>
-    // <div
-    //   class="row justify-content-center"
-    //   style={{ marginTop: "-1rem", marginBottom: "3rem", alignItems: "center" }}
-    // >
-    //   <div className="col-10 col-md-5">
-    //     {" "}
-    //     {/* Make this responsive: full width on small screens, 8/12 on medium+ screens */}
-    //     <div
-    //       className="card"
-    //       style={{
-    //         backgroundColor: "#E6E6FA",
-    //         padding: "2rem",
-    //         justifyContent: "center",
-    //         alignItems: "center",
-    //       }}
-    //     >
-    //       <div className="d-flex flex-column flex-md-row gap-2">
-    //         <input
-    //           type="number"
-    //           className="form-control "
-    //           placeholder="Amount in usdc"
-    //           style={{ width: "300px" }}
-    //           min="0"
-    //           onChange={(e) => handleDollarChange(e)}
-    //         />
-    //         <button
-    //           className="btn btn-primary"
-    //           style={{
-    //             backgroundColor: "#007bff",
-    //             borderColor: "#007bff",
-    //             width: "100%",
-    //             maxWidth: "150px",
-    //           }}
-    //         >
-    //           Buy
-    //         </button>
-    //       </div>
-    //       <div
-    //         className="d-flex gap-6"
-    //         style={{
-    //           justifyContent: "center",
-    //           alignItems: "center",
-    //           marginTop: "1rem",
-    //         }}
-    //       >
-    //         <p style={{ marginRight: "0.7rem", marginLeft: "-0rem" }}>
-    //           ${pricepertoken} = 1 CRNT
-    //         </p>
-    //         <p>you will get {receivingTokens} crnt</p>
-    //       </div>
-
-    //       <div
-    //         className="d-flex flex-column flex-md-row"
-    //         style={{ marginTop: "0.3rem", alignItems: "center" }}
-    //       >
-    //         <p>You will recieve {crntAmount} crnt (25%)</p>
-
-    //         <select
-    //           className="form-select "
-    //           aria-label="Select stage"
-    //           style={{ width: "110px", margin: "0 1rem 0.5rem 1rem" }}
-    //           value={userStage}
-    //           onChange={(e) => setUserStage(Number(e.target.value))}
-    //         >
-    //           {/* <option selected>Select stage</option> */}
-    //           <option value="0">Stage 1</option>
-    //           <option value="1">Stage 2</option>
-    //           <option value="2">Stage 3</option>
-    //         </select>
-
-    //         <button
-    //           className="btn btn-primary"
-    //           style={{
-    //             backgroundColor: "#007bff",
-    //             borderColor: "#007bff",
-    //             width: "100%",
-    //             maxWidth: "150px",
-    //           }}
-    //         >
-    //           Claim
-    //         </button>
-    //       </div>
-
-    //       <div>
-    //         <p>Token wil be unlock in 30 days</p>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
+            </Form>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
