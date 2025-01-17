@@ -5,8 +5,13 @@
   border: 2px solid #01C3F4;
  
 }
+.mycard {
+  /* background-color:#0412351A;  */
+  background-color: red;
+  /* opacity: 10%; */
+}
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .form1 {
       width: 300px; /* Change this value as per your requirement */
     }
@@ -15,5 +20,8 @@
     }
     .buybtn{
       max-width: fit-content;
+    }
+    .card2{
+      margin-top: 1rem !important;
     }
   }
