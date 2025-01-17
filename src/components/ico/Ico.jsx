@@ -11,6 +11,7 @@ import {
 } from "wagmi";
 import { IcoContext } from "../../contexts/context";
 import { flare } from "wagmi/chains";
+import { ToastContainer, toast } from "react-toastify";
 const { Web3 } = require("web3");
 const web3 = new Web3(window.ethereum);
 
@@ -27,9 +28,9 @@ const Ico = () => {
 
 
   const { connect, connectors } = useConnect();
-  const { isConnected } = useAccount();
+  const { isConnected,address } = useAccount();
 
-//   console.log(currentAccount, "isConnected");
+  console.log(address, "address");
 
   const {
     data: currentStageData,
@@ -84,7 +85,6 @@ const Ico = () => {
   if(originalStagePurchase !=undefined){
     userBalance = Number(originalStagePurchase);
   }
-  console.log(originalStagePurchase,'originalStagePurchase')
 
   const {
     data: stagePurchases,
@@ -97,6 +97,19 @@ const Ico = () => {
     args: [currentAccount, userStage],
     enabled: !!currentAccount,
   });
+
+  const { data:buyToken, isLoadings, isSuccess, write:writeBuyToken } = useContractWrite({
+            address: icoAddress,
+            abi: icoAbi,
+            functionName: 'buyTokens',
+          });
+
+          const { data:claimToken, isLoadings:claimTokenLoading, isSuccess:claimTokenSuccess, write:writeClaimToken } = useContractWrite({
+            address: icoAddress,
+            abi: icoAbi,
+            functionName: 'claimTokens',
+          });
+
 
   const {
     data: lastClaimTimestamp,
@@ -135,6 +148,11 @@ const Ico = () => {
     }
   } else if (Number(originalStagePurchase) == 0) {
     locked = false;
+    lastClaimday = 0;
+    lastClaimHour= 0;
+    lastClaimMin=0;
+    lastClaimsec = 0;
+
   }
 
   let crntAmount = 0;
@@ -146,7 +164,61 @@ const Ico = () => {
   const handleStageChange = (e) => {
     setUserStage(parseInt(e.target.value)); // Update the userStage state with the selected value
   };
-  console.log(userStage,'userStage')
+ 
+  const handleClaimToken = async () => {
+    try{
+      if(!isConnected){
+        console.log(isConnected,'isConnected');
+        console.log('please connect your metamast')
+        return;
+      }
+      writeClaimToken({
+        args: [userStage],
+      })
+    }
+    catch(err){
+      console.log(err,'error during claiming')
+        const errormessage = err.toString();
+            console.log(errormessage);
+            const reasonMatch = errormessage.match(/reason="([^"]+)"/);
+            const reason = reasonMatch ? reasonMatch[1] : "Failed";
+            console.log(reason);
+      
+            toast.error(reason, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+    }
+  }
+
+  const handleBuy = async (activeTab, amount) => {
+      try {  
+        if (!isConnected) {
+          console.log(isConnected,'isConnected')
+          console.error('Please connect your wallet before proceeding.');
+          return;
+        }
+    
+  
+        let stablecoinAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF"
+  
+        writeBuyToken({
+          args: [BigInt(dollarAmount), stablecoinAddress],
+        });
+        
+      } catch (err) {
+        const errormessage = err.toString();
+        console.log(errormessage);
+        const reasonMatch = errormessage.match(/reason="([^"]+)"/);
+        const reason = reasonMatch ? reasonMatch[1] : "Failed";
+        console.log(reason);
+      }
+    };
 
   return (
     <div className="container mt-5" id="ico">
@@ -177,6 +249,9 @@ const Ico = () => {
               width: '50%',
               marginBottom:'1rem'
             }}
+            onClick={() => {
+              handleBuy(dollarAmount);
+            }}
           >
             Buy token
           </button>
@@ -201,8 +276,8 @@ const Ico = () => {
 
       <div className="container my-5  p-1">
       <h3 className="text-center mb-4 text-primary">Claim Token</h3>
-      <div className="card realeasToken" >
-        <div className="card-body">
+      <div className="card " >
+        <div className="card-body realeasToken">
           <div className="row" style={{width:'100%'}}>
             <div className="col-12 col-md-6">
               <div className="mb-3">
@@ -267,7 +342,7 @@ const Ico = () => {
               border: 'none',
             //   width: '60%',
               marginBottom:'1rem'
-            }}>Release Token</button>
+            }} onClick={()=> handleClaimToken()}>Release Token</button>
             </div>
           </div>
         </div>
