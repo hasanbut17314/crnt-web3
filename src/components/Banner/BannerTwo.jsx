@@ -226,18 +226,10 @@ const BannerTwo = () => {
                     </div>
                   </div>
                   <div className="banner-progress-wrap" style={{marginTop:'2rem'}}>
-                    <ul>
+                    <ul className="display-">
                       <li className="d-flex align-items-center flex-column">
                         <span className="sm-stage">stage 1</span>
-                        Ignition
-                      </li>
-                      <li className="d-flex align-items-center flex-column">
-                        <span className="sm-stage">stage 2</span>
-                        Acceleration
-                      </li>
-                      <li className="d-flex align-items-center flex-column">
-                        <span className="sm-stage">stage 3</span>
-                        Momentum
+                        
                       </li>
                     </ul>
 
@@ -247,6 +239,7 @@ const BannerTwo = () => {
                           currentStage == 1
                             ? "progress-bar"
                             : currentStage == 2
+                            
                             ? "progress-bar stage-2"
                             : currentStage == 3
                             ? "progress-bar stage-3"
