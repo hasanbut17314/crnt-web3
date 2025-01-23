@@ -15,7 +15,7 @@ import { ethers } from "ethers";
 import ConnectWallet from "../Buttons/ConnectWallet";
 
 const BannerTwo = () => {
-  const [percentRaised, setPercentRaised] = useState(0);
+  const [percentRaised, setPercentRaised] = useState(10);
   const [isHovered, setIsHovered] = useState(false);
   const { connectWallet, currentAccount } = useContext(IcoContext);
 
@@ -26,87 +26,87 @@ const BannerTwo = () => {
   let stageRaised2 = 0;
 
   const {
-      data: currentStageData,
-      isError: isCurrentStageError,
-      isLoading: isCurrentStageLoading,
-    } = useContractRead({
-      address: icoAddress,
-      abi: icoAbi,
-      functionName: "currentStage",
-    });
+    data: currentStageData,
+    isError: isCurrentStageError,
+    isLoading: isCurrentStageLoading,
+  } = useContractRead({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "currentStage",
+  });
 
-    const {
-      data: stageDetailsData,
-      isError: isStageDetailsError,
-      isLoading: isStageDetailsLoading,
-    } = useContractRead({
-      address: icoAddress,
-      abi: icoAbi,
-      functionName: "stages",
-      args: [`${currentStageData}`], // Pass currentStage only when available
-    });
+  const {
+    data: stageDetailsData,
+    isError: isStageDetailsError,
+    isLoading: isStageDetailsLoading,
+  } = useContractRead({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "stages",
+    args: [`${currentStageData}`], // Pass currentStage only when available
+  });
 
-    let pricepertoken
-    if(stageDetailsData){
-      pricepertoken = stageDetailsData[2];
-      pricepertoken = Number(pricepertoken)/1000000000000000000 
-    }
+  let pricepertoken
+  if (stageDetailsData) {
+    pricepertoken = stageDetailsData[2];
+    pricepertoken = Number(pricepertoken) / 1000000000000000000
+  }
 
   //   console.log(typeof(currentStageData),'type of current stage')
-      const {
-        data: stageDetailsData0,
-        isError: isStageDetailsError0,
-        isLoading: isStageDetailsLoading0,
-      } = useContractRead({
-        address: icoAddress,
-        abi: icoAbi,
-        functionName: "stages",
-        args: ["0"], // Pass currentStage only when available
-      });
-      if(stageDetailsData0 ){
-        stageRaised0 = stageDetailsData0[5]
-        stageRaised0= Number(stageRaised0)
-      }
-    
+  const {
+    data: stageDetailsData0,
+    isError: isStageDetailsError0,
+    isLoading: isStageDetailsLoading0,
+  } = useContractRead({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "stages",
+    args: ["0"], // Pass currentStage only when available
+  });
+  if (stageDetailsData0) {
+    stageRaised0 = stageDetailsData0[5]
+    stageRaised0 = Number(stageRaised0)
+  }
 
-      const {
-        data: stageDetailsData1,
-        isError: isStageDetailsError1,
-        isLoading: isStageDetailsLoading1,
-      } = useContractRead({
-        address: icoAddress,
-        abi: icoAbi,
-        functionName: "stages",
-        args: ["1"], // Pass currentStage only when available
-      });
-      if(stageDetailsData1){
-        stageRaised1 = stageDetailsData1[5]
-        stageRaised1= Number(stageRaised1)
-      }
-     
-      const {
-        data: stageDetailsData2,
-        isError: isStageDetailsError2,
-        isLoading: isStageDetailsLoading2,
-      } = useContractRead({
-        address: icoAddress,
-        abi: icoAbi,
-        functionName: "stages",
-        args: ["2"], // Pass currentStage only when available
-      });
-      if(stageDetailsData2){
-        stageRaised2 = stageDetailsData2[5]
-      stageRaised2= Number(stageRaised2)
-      }
-      
 
-      // setTargetRaised(stageRaised1+stageRaised1+stageRaised2)
-      let totalRagetRaised = stageRaised1+stageRaised1+stageRaised2
+  const {
+    data: stageDetailsData1,
+    isError: isStageDetailsError1,
+    isLoading: isStageDetailsLoading1,
+  } = useContractRead({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "stages",
+    args: ["1"], // Pass currentStage only when available
+  });
+  if (stageDetailsData1) {
+    stageRaised1 = stageDetailsData1[5]
+    stageRaised1 = Number(stageRaised1)
+  }
 
-      console.log(totalRagetRaised,'totalRagetRaised')
-    
+  const {
+    data: stageDetailsData2,
+    isError: isStageDetailsError2,
+    isLoading: isStageDetailsLoading2,
+  } = useContractRead({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "stages",
+    args: ["2"], // Pass currentStage only when available
+  });
+  if (stageDetailsData2) {
+    stageRaised2 = stageDetailsData2[5]
+    stageRaised2 = Number(stageRaised2)
+  }
 
-    
+
+  // setTargetRaised(stageRaised1+stageRaised1+stageRaised2)
+  let totalRagetRaised = stageRaised1 + stageRaised1 + stageRaised2
+
+  console.log(totalRagetRaised, 'totalRagetRaised')
+
+
+
 
 
   const {
@@ -160,45 +160,45 @@ const BannerTwo = () => {
                       </button>
                     </a> */}
 
-                    <div style={{marginTop:'-3rem'}}> 
+                    <div style={{ marginTop: '-3rem' }}>
 
-                    
-                    <h2 className="title"  >
-                      An Innovative Platform Empowering <span>Global</span>{" "}
-                      Internet Users
-                    </h2>
+
+                      <h2 className="title"  >
+                        An Innovative Platform Empowering <span>Global</span>{" "}
+                        Internet Users
+                      </h2>
 
                     </div>
 
-                    <h6 className="title" style={{marginTop:'-2rem'}}>Explore our  <span>AI </span> Platform </h6>
-                  <div style={{marginTop:'-3rem',display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
-                    <a
-                      href="https://creationnetwork.ai"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      
-                    >
-                      <button
-                        className=" btn-secondary"
-                        style={{
-                          backgroundColor: isHovered ? "#564DCA" : "#00C4F4",
-                          lineHeight: "1",
-                          fontSize: "14px",
-                          padding: "15px 27px",
-                          border: "none",
-                          cursor: "pointer",
-                          transition: "0.5s",
-                          borderRadius: "7px",
-                          marginBottom:'1rem'
-                        }}
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
-                      >
-                         <h6> creation Network </h6>
-                      </button>
-                    </a>
+                    <h6 className="title" style={{ marginTop: '-2rem' }}>Explore our  <span>AI </span> Platform </h6>
+                    <div style={{ marginTop: '-3rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <a
+                        href="https://creationnetwork.ai"
+                        target="_blank"
+                        rel="noopener noreferrer"
 
-                    {/* {currentAccount == null? (
+                      >
+                        <button
+                          className=" btn-secondary"
+                          style={{
+                            backgroundColor: isHovered ? "#564DCA" : "#00C4F4",
+                            lineHeight: "1",
+                            fontSize: "14px",
+                            padding: "15px 27px",
+                            border: "none",
+                            cursor: "pointer",
+                            transition: "0.5s",
+                            borderRadius: "7px",
+                            marginBottom: '1rem'
+                          }}
+                          onMouseEnter={() => setIsHovered(true)}
+                          onMouseLeave={() => setIsHovered(false)}
+                        >
+                          <h6> creation Network </h6>
+                        </button>
+                      </a>
+
+                      {/* {currentAccount == null? (
                         <>
                         
 
@@ -225,11 +225,15 @@ const BannerTwo = () => {
                       )} */}
                     </div>
                   </div>
-                  <div className="banner-progress-wrap" style={{marginTop:'2rem'}}>
-                    <ul className="display-">
+                  <div className="banner-progress-wrap" style={{ marginTop: '2.5rem' }}>
+                    <ul className="d-flex justify-content-between" style={{ marginBottom: '-1rem' }}>
                       <li className="d-flex align-items-center flex-column">
-                        <span className="sm-stage">stage 1</span>
-                        
+                        <p className="sm-stage">stage 1</p>
+                        <span>0.02 ETH</span>
+                      </li>
+                      <li className="d-flex align-items-center flex-column">
+                        <p className="sm-stage">stage 2</p>
+                        <span>0.05 ETH</span>
                       </li>
                     </ul>
 
@@ -239,15 +243,15 @@ const BannerTwo = () => {
                           currentStage == 1
                             ? "progress-bar"
                             : currentStage == 2
-                            
-                            ? "progress-bar stage-2"
-                            : currentStage == 3
-                            ? "progress-bar stage-3"
-                            : currentStage == 4
-                            ? "progress-bar stage-4"
-                            : currentStage == 5
-                            ? "progress-bar stage-5"
-                            : "progress-bar"
+
+                              ? "progress-bar stage-2"
+                              : currentStage == 3
+                                ? "progress-bar stage-3"
+                                : currentStage == 4
+                                  ? "progress-bar stage-4"
+                                  : currentStage == 5
+                                    ? "progress-bar stage-5"
+                                    : "progress-bar"
                         }
                         role="progressbar"
                         style={{
