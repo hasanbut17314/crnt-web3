@@ -150,9 +150,9 @@ export const IcoProvider = ({ children }) => {
                 const temp = await ethereum.request({
                     method: "eth_accounts",
                 });
-                if (chainId !== "0xaa36a7") {
-                    alert("Please Connect to Sepolia testnet");
-                }
+                // if (chainId !== "0xaa36a7") {
+                //     alert("Please Connect to Sepolia testnet");
+                // }
                 if (temp.length == 0) {
                     setCurrentAccount(null);
                 } else {

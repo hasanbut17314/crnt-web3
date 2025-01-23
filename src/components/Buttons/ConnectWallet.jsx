@@ -14,28 +14,46 @@ import LoadingOverlay from "react-loading-overlay";
 import "react-toastify/dist/ReactToastify.css";
 import { icoAbi, icoAddress } from "../../utils/constants";
 import { useEffect } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useConnect } from "wagmi";
 
 const ConnectWallet = (props) => {
   // const { connectWallet, currentAccount, isLoading, setCurrentAccount } =
   //   useContext(IcoContext);
 
-  const { connectWallet } =
-    useContext(IcoContext);
+  // const { connectWallet } =
+  //   useContext(IcoContext);
   const { isOpen, open, close, setDefaultChain } = useWeb3Modal();
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
   const [isLoading, setIsloading] = useState(false);
   const [currentAccount, setCurrentAccount] = useState(null);
-
+  const { connect, connectors } = useConnect();
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
     setShow(false);
   };
-  // const connectWallet = () => {
-  //   console.log('connect wallet')
-  // }
+  const connectWallet = () => {
+    const metamaskConnector = connectors.find(
+      (connector) => connector.name === "MetaMask"
+    );
+    const phantomConnector = connectors.find(
+      (connector) => connector.name === "Phantom"
+    );
+    const walletConnectConnector = connectors.find(
+      (connector) => connector.name === "WalletConnect"
+    );
+
+    if (metamaskConnector) {
+      connect({ connector: metamaskConnector });
+    } else if (phantomConnector) {
+      connect({ connector: phantomConnector });
+    } else if (walletConnectConnector) {
+      connect({ connector: walletConnectConnector });
+    } else {
+      console.error("No wallet connector found");
+    }
+  };
 
   const handleShow = () => setShow(true);
 
@@ -95,7 +113,10 @@ const ConnectWallet = (props) => {
           </Modal.Header>
           <Modal.Body>
             <>
-              <button class="button btn btn-two" onClick={ connectWallet}>
+              <button
+                class="button btn btn-two"
+                onClick={() => connectWallet()}
+              >
                 <img
                   src="/images/icons/MetaMask_Fox.png"
                   // src="/images/icons/usdt.png"
