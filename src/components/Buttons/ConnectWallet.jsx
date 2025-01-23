@@ -95,7 +95,7 @@ const ConnectWallet = (props) => {
           </Modal.Header>
           <Modal.Body>
             <>
-              <button class="button btn btn-two" onClick={() => connectWallet()}>
+              <button class="button btn btn-two" onClick={ connectWallet}>
                 <img
                   src="/images/icons/MetaMask_Fox.png"
                   // src="/images/icons/usdt.png"
