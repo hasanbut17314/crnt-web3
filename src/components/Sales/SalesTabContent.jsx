@@ -12,7 +12,7 @@ const SalesTabContent = (props) => {
     >
       <div className="chart-content-inner">
         <h2 className="title">{props.title}</h2>
-        <h2 className="sub-title pb-3 fs-3">{props.subtitle}</h2>
+        {/* <h2 className="sub-title pb-3 fs-3">{props.subtitle}</h2> */}
         <p className="text-white"><span className="fw-bold">Tokens: </span >{props.tokens}</p>
         <p className="text-white"><span className="fw-bold">Duration: </span>{props.duration}</p>
         <p className="text-white">{props.description}</p>

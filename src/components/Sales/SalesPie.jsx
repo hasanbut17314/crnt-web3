@@ -7,7 +7,7 @@ const SalesPie = () => {
             type: 'pie',
         },
         labels: [
-            "Sale Pre & Sale (33%)",
+            "Pre sale (33%)",
             "Liquidity (20%)",
             "Team/Advisors (12%)",
             "Marketing (20%)",
