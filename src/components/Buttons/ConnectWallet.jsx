@@ -19,6 +19,9 @@ import { useAccount } from "wagmi";
 const ConnectWallet = (props) => {
   // const { connectWallet, currentAccount, isLoading, setCurrentAccount } =
   //   useContext(IcoContext);
+
+  const { connectWallet } =
+    useContext(IcoContext);
   const { isOpen, open, close, setDefaultChain } = useWeb3Modal();
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
   const [isLoading, setIsloading] = useState(false);
@@ -30,9 +33,9 @@ const ConnectWallet = (props) => {
   const handleClose = () => {
     setShow(false);
   };
-  const connectWallet = () => {
-    console.log('connect wallet')
-  }
+  // const connectWallet = () => {
+  //   console.log('connect wallet')
+  // }
 
   const handleShow = () => setShow(true);
 
