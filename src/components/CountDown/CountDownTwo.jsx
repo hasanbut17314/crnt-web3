@@ -52,7 +52,7 @@ const CountDownTwo = () => {
         stageDays = stageDetailsData[2]
         stageDays = Number(stageDays) / 86400;
         tokenRaised = stageDetailsData[5]
-        tokenRaised= Number(tokenRaised)
+        tokenRaised= Number(tokenRaised)/1000000000000000000
       }    
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
