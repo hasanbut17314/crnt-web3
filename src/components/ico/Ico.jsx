@@ -22,6 +22,15 @@ const Ico = () => {
   //   const [locked, setLocked] = useState(false);
   const { connectWallet, currentAccount } = useContext(IcoContext);
   const [userStage, setUserStage] = useState(0);
+  const [claimStage, setClaimStage] = useState(0);
+
+  const handleClaimChange = (e) => {
+    setClaimStage(e.target.value);
+  };
+
+  // console.log(claimStage,'claimStage')
+
+  // console.log(currentAccount,'currentAccount')
 
   const [tokens, setTokens] = useState(0);
   const tokenRate = 0.01;
@@ -29,7 +38,7 @@ const Ico = () => {
   const { connect, connectors } = useConnect();
   const { isConnected, address } = useAccount();
 
-  console.log(address, "address");
+  // console.log(address, "address");
 
   const {
     data: currentStageData,
@@ -53,7 +62,7 @@ const Ico = () => {
   });
   let pricepertoken;
   if (stageDetailsData) {
-    pricepertoken = stageDetailsData[2];
+    pricepertoken = stageDetailsData[1];
     pricepertoken = Number(pricepertoken) / 1000000000000000000;
   }
 
@@ -69,33 +78,36 @@ const Ico = () => {
   };
 
   const {
-    data: originalStagePurchase,
+    data: purchases,
     isError: purchaseError,
     isLoading: purchaseIsLoading,
   } = useContractRead({
     address: icoAddress,
     abi: icoAbi,
-    functionName: "originalStagePurchases",
-    args: [currentAccount, userStage],
+    functionName: "purchases",
+    args: [address],
     enabled: !!currentAccount,
   });
+
+  console.log(purchases,'purchases')
+  let originalStagePurchase =0;
 
   let userBalance = 0;
   if (originalStagePurchase != undefined) {
     userBalance = Number(originalStagePurchase);
   }
 
-  const {
-    data: stagePurchases,
-    isError: stagePurchasesError,
-    isLoading: stagePurchasesIsLoading,
-  } = useContractRead({
-    address: icoAddress,
-    abi: icoAbi,
-    functionName: "stagePurchases",
-    args: [currentAccount, userStage],
-    enabled: !!currentAccount,
-  });
+  // const {
+  //   data: stagePurchases,
+  //   isError: stagePurchasesError,
+  //   isLoading: stagePurchasesIsLoading,
+  // } = useContractRead({
+  //   address: icoAddress,
+  //   abi: icoAbi,
+  //   functionName: "stagePurchases",
+  //   args: [currentAccount, userStage],
+  //   enabled: !!currentAccount,
+  // });
 
   const {
     data: buyToken,
@@ -172,7 +184,8 @@ const Ico = () => {
     setUserStage(parseInt(e.target.value)); // Update the userStage state with the selected value
   };
 
-  const handleClaimToken = async () => {
+  const handleClaimToken = async (event) => {
+    if (event) event.preventDefault();
     try {
       if (!isConnected) {
         console.log(isConnected, "isConnected");
@@ -180,7 +193,7 @@ const Ico = () => {
         return;
       }
       writeClaimToken({
-        args: [userStage],
+        args: [claimStage],
       });
     } catch (err) {
       console.log(err, "error during claiming");
@@ -202,7 +215,9 @@ const Ico = () => {
     }
   };
 
-  const handleBuy = async (activeTab, amount) => {
+  const handleBuy = async (event) => {
+    if (event) event.preventDefault();
+
     try {
       if (!isConnected) {
         console.log(isConnected, "isConnected");
@@ -212,7 +227,7 @@ const Ico = () => {
 
       let stablecoinAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF";
 
-      writeBuyToken({
+       writeBuyToken({
         args: [BigInt(dollarAmount), stablecoinAddress],
       });
     } catch (err) {
@@ -247,7 +262,7 @@ const Ico = () => {
                 className="btn btn-primary releaseBtn"
                 
                 style={{ backgroundColor: "#564DCA", borderColor: "#007bff" }}
-                onClick={() =>handleBuy()}
+                onClick={(e) =>handleBuy(e)}
               >
                 Buy Token
               </button>
@@ -272,7 +287,7 @@ const Ico = () => {
                   Total CRNT token in wallet:
                 </Form.Label>
                 <div className="col-5">
-                  <Form.Control type="text" placeholder="0 CRNT" readOnly />
+                  <Form.Control type="text" placeholder="0 CRNT" value={purchases === undefined || purchaseIsLoading ? "0" : Number(purchases[0]) } readOnly />
                 </div>
               </Form.Group>
               <Form.Group className="mb-3 row align-items-center">
@@ -280,7 +295,7 @@ const Ico = () => {
                   Invested in stage:
                 </Form.Label>
                 <div className="col-5">
-                  <Form.Select>
+                  <Form.Select  value={claimStage} onChange={handleClaimChange}>
                     <option value="0">Stage 1</option>
                     <option value="1">Stage 2</option>
                     <option value="2">Stage 3</option>
@@ -292,13 +307,13 @@ const Ico = () => {
                   Locked token:
                 </Form.Label>
                 <div className="col-5">
-                  <Form.Control type="text" placeholder="0 CRNT" readOnly />
+                  <Form.Control type="text" placeholder="0 CRNT" readOnly  value={purchases === undefined || purchaseIsLoading ? "0" : Number(purchases[1])}/>
                 </div>
               </Form.Group>
               <Form.Group className="mb-3 row align-items-center">
                 <Form.Label  className="col-7 col-form-label" >Ready to release token:</Form.Label>
                 <div className="col-5">
-                <Form.Control type="text" placeholder="0 CRNT" readOnly />
+                <Form.Control type="text" placeholder="0 CRNT" readOnly value={purchases === undefined || purchaseIsLoading ? "0" : Number(purchases[1])*(0.25)  } />
                 </div>
                 
               </Form.Group>
@@ -312,6 +327,7 @@ const Ico = () => {
                 className="btn btn-primary releaseBtn"
                 
                 style={{ backgroundColor: "#564DCA", borderColor: "#007bff" }}
+                onClick={(e) =>handleClaimToken(e)}
               >
                 Release Token
               </button>

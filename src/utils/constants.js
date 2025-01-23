@@ -1,9 +1,9 @@
-exports.icoAddress = "0x5Cdc7C47A8ebd1f3ecF77A98B0A17a2Cca3C53AA"
+exports.icoAddress = "0x13ead4fc976a15a9cbb7be5fa31e0f58edc7b500"
 exports.rpc = "https://eth-sepolia.g.alchemy.com/v2/OgNRbpQ5JA5B414MwzN7ttUEr2r1PSqz"
 exports.usdtAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF"
 exports.busdAddress = "0x788Fe6d9830D3888Ef868971480EdA178224d219"
-// exports.ProjectId = '38c3d7187f96bd6a5f1ca305ebfc5ad7'
-exports.ProjectId = 'bc7196f601ca80fe855e037635bc42ba'
+exports.ProjectId = '38c3d7187f96bd6a5f1ca305ebfc5ad7'
+// exports.ProjectId = 'bc7196f601ca80fe855e037635bc42ba'
 exports.pdflink = "1nOXMauzD7ToAc8Qy6wef8o1tvgaZSsiy"
 exports.stakingAddress ="0x308d3E048C2D8a8180F0a0bff93e54E339F91652";
 exports.vestingAddress = "0xB7Bda0Bf03272dC4eb042D04605e3140b183Fc9D";
@@ -783,12 +783,6 @@ exports.icoAbi = [
 				"internalType": "bool",
 				"name": "status",
 				"type": "bool"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint8",
-				"name": "decimals",
-				"type": "uint8"
 			}
 		],
 		"name": "WhitelistedTokenUpdated",
@@ -798,12 +792,12 @@ exports.icoAbi = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "amount",
+				"name": "_buyToken",
 				"type": "uint256"
 			},
 			{
 				"internalType": "address",
-				"name": "stablecoin",
+				"name": "_stablecoin",
 				"type": "address"
 			}
 		],
@@ -816,7 +810,20 @@ exports.icoAbi = [
 		"inputs": [
 			{
 				"internalType": "uint8",
-				"name": "claimedStage",
+				"name": "_newStage",
+				"type": "uint8"
+			}
+		],
+		"name": "changeRound",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "_transactionIndex",
 				"type": "uint8"
 			}
 		],
@@ -865,23 +872,25 @@ exports.icoAbi = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"name": "lastClaimTimestamp",
+		"inputs": [],
+		"name": "getTotalRaisedAmount",
 		"outputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "totalRaisedAmount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getTotalTokensSold",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "totalTokensSold",
 				"type": "uint256"
 			}
 		],
@@ -892,21 +901,33 @@ exports.icoAbi = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "_userAddress",
 				"type": "address"
-			},
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
 			}
 		],
-		"name": "originalStagePurchases",
+		"name": "getUserTransactions",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "buyTokens",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "remainingTokens",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastClaim",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct CRNTPresale.User[]",
 				"name": "",
-				"type": "uint256"
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
@@ -944,37 +965,28 @@ exports.icoAbi = [
 				"internalType": "address",
 				"name": "",
 				"type": "address"
-			}
-		],
-		"name": "purchases",
-		"outputs": [
+			},
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"name": "purchasesInStablecoinForCurrentStage",
+		"name": "purchases",
 		"outputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "buyTokens",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "remainingTokens",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lastClaim",
 				"type": "uint256"
 			}
 		],
@@ -986,6 +998,25 @@ exports.icoAbi = [
 		"name": "renounceOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "sellTokenInUDSTPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -1012,40 +1043,11 @@ exports.icoAbi = [
 				"internalType": "bool",
 				"name": "status",
 				"type": "bool"
-			},
-			{
-				"internalType": "uint8",
-				"name": "decimals",
-				"type": "uint8"
 			}
 		],
 		"name": "setWhitelistedToken",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"name": "stagePurchases",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -1058,11 +1060,6 @@ exports.icoAbi = [
 		],
 		"name": "stages",
 		"outputs": [
-			{
-				"internalType": "enum ICO.StageName",
-				"name": "name",
-				"type": "uint8"
-			},
 			{
 				"internalType": "uint256",
 				"name": "allocation",
@@ -1087,48 +1084,10 @@ exports.icoAbi = [
 				"internalType": "uint256",
 				"name": "tokensSold",
 				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "tokenDecimals",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
 			},
 			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "tokenPurchasesInStablecoin",
-		"outputs": [
-			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "raisedAmount",
 				"type": "uint256"
 			}
 		],
@@ -1144,6 +1103,34 @@ exports.icoAbi = [
 			}
 		],
 		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "stageIndex",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "newPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "newDuration",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "newStartTime",
+				"type": "uint256"
+			}
+		],
+		"name": "updateStageDetails",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -1170,22 +1157,12 @@ exports.icoAbi = [
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "stablecoin",
-				"type": "address"
-			},
-			{
 				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
-			},
-			{
-				"internalType": "uint8",
-				"name": "purchasedStage",
-				"type": "uint8"
 			}
 		],
-		"name": "withdrawFunds",
+		"name": "withdrawTokens",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

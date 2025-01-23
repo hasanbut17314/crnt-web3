@@ -68,7 +68,7 @@ const Staking = () => {
     try{
 
       stake({
-        args: [BigInt(stakeInput)],
+        args: [BigInt(stakingAmount)],
       });
 
     }catch(error) {
@@ -78,7 +78,7 @@ const Staking = () => {
   const handleUnstake = async () => {
     try{
       unstake({
-        args: [BigInt(stakeInput)]
+        args: [BigInt(stakingAmount)]
       })
     }
     catch(error){
@@ -128,10 +128,10 @@ const Staking = () => {
               <div className="d-flex justify-content-center gap-2 mt-4">
                 <button className="btn btn-primary releaseBtn"
                 
-                style={{ backgroundColor: "#564DCA", borderColor: "#007bff" }}>Buy token</button>
+                style={{ backgroundColor: "#564DCA", borderColor: "#007bff" }} onClick={() => handleStake()}>stake</button>
                 <button className="btn btn-primary releaseBtn"
                 
-                style={{ backgroundColor: "#564DCA", borderColor: "#007bff" }}>Buy token</button>
+                style={{ backgroundColor: "#564DCA", borderColor: "#007bff" }} onClick={() => handleUnstake()}>Unstake </button>
               </div>
             </div>
           </div>

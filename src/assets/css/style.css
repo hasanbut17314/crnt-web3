@@ -1084,7 +1084,7 @@ label {
 .banner-progress-wrap ul li p::before {
   content: "";
   position: absolute;
-  bottom: 58%;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
   width: 2.3px;
@@ -1154,6 +1154,7 @@ label {
   font-size: 0.7rem;
   color: white;
   text-transform: capitalize;
+  margin-bottom: 0;
 }
 
 .banner-progress-wrap .title {

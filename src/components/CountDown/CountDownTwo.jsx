@@ -41,13 +41,15 @@ const CountDownTwo = () => {
         functionName: "stages",
         args: [`${currentStageData}`], // Pass currentStage only when available
       });
+
+      console.log(stageDetailsData,'stageDetailsData')
       if(stageDetailsData){
         // setStagestart(stageDetailsData[5])
-        stagestart = stageDetailsData[4]
+        stagestart = stageDetailsData[3]
          stagestart = Number(stagestart)*1000;
         
         // timeDifference = stageStartMs - now;
-        stageDays = stageDetailsData[3]
+        stageDays = stageDetailsData[2]
         stageDays = Number(stageDays) / 86400;
         tokenRaised = stageDetailsData[5]
         tokenRaised= Number(tokenRaised)

@@ -68,7 +68,7 @@ const BuyNow = (props) => {
     
         let pricepertoken
         if(stageDetailsData){
-          pricepertoken = stageDetailsData[2];
+          pricepertoken = stageDetailsData[1];
           pricepertoken = Number(pricepertoken)/1000000000000000000 
         }
 

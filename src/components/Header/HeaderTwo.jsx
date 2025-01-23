@@ -11,10 +11,20 @@ import { IcoContext } from "../../contexts/context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ConnectWallet from "../Buttons/ConnectWallet";
+import {
+  useAccount,
+} from "wagmi";
 // import { IcoContext } from ;
 
 const HeaderTwo = () => {
-  const { connectWallet, currentAccount } = useContext(IcoContext);
+  const { connectWallet } = useContext(IcoContext);
+  const [currentAccount,setCurrentAccount] = useState(null);
+  const { isConnected, address } = useAccount();
+  useEffect(() => {
+    if (isConnected && address) {
+      setCurrentAccount(address);
+    }
+  }, [isConnected, address]);
 
   // sticky nav bar
   const [stickyClass, setStickyClass] = useState({

@@ -35,6 +35,8 @@ const BannerTwo = () => {
     functionName: "currentStage",
   });
 
+  
+
   const {
     data: stageDetailsData,
     isError: isStageDetailsError,
@@ -46,9 +48,12 @@ const BannerTwo = () => {
     args: [`${currentStageData}`], // Pass currentStage only when available
   });
 
+
+  
+
   let pricepertoken
   if (stageDetailsData) {
-    pricepertoken = stageDetailsData[2];
+    pricepertoken = stageDetailsData[1];
     pricepertoken = Number(pricepertoken) / 1000000000000000000
   }
 
@@ -102,12 +107,6 @@ const BannerTwo = () => {
 
   // setTargetRaised(stageRaised1+stageRaised1+stageRaised2)
   let totalRagetRaised = stageRaised1 + stageRaised1 + stageRaised2
-
-  console.log(totalRagetRaised, 'totalRagetRaised')
-
-
-
-
 
   const {
     stagePrice,
@@ -226,14 +225,16 @@ const BannerTwo = () => {
                     </div>
                   </div>
                   <div className="banner-progress-wrap" style={{ marginTop: '2.5rem' }}>
-                    <ul className="d-flex justify-content-between" style={{ marginBottom: '-1rem' }}>
+                    <ul className="d-flex justify-content-between" style={{ marginBottom: '0rem' }}>
                       <li className="d-flex align-items-center flex-column">
-                        <p className="sm-stage">stage 1</p>
-                        <span>0.02 ETH</span>
+                        <p className="sm-stage">current stage  </p>
+                        <span>stage 1</span>
+                        <span>$ {pricepertoken} = crnt</span>
                       </li>
                       <li className="d-flex align-items-center flex-column">
-                        <p className="sm-stage">stage 2</p>
-                        <span>0.05 ETH</span>
+                        <p className="sm-stage">next stage </p>
+                        <span>stage 2</span>
+                        <span>$ 0.022 = crnt</span>
                       </li>
                     </ul>
 

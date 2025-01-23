@@ -17,16 +17,22 @@ import { useEffect } from "react";
 import { useAccount } from "wagmi";
 
 const ConnectWallet = (props) => {
-  const { connectWallet, currentAccount, isLoading, setCurrentAccount } =
-    useContext(IcoContext);
+  // const { connectWallet, currentAccount, isLoading, setCurrentAccount } =
+  //   useContext(IcoContext);
   const { isOpen, open, close, setDefaultChain } = useWeb3Modal();
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
+  const [isLoading, setIsloading] = useState(false);
+  const [currentAccount, setCurrentAccount] = useState(null);
+
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
     setShow(false);
   };
+  const connectWallet = () => {
+    console.log('connect wallet')
+  }
 
   const handleShow = () => setShow(true);
 
@@ -86,7 +92,7 @@ const ConnectWallet = (props) => {
           </Modal.Header>
           <Modal.Body>
             <>
-              <button class="button btn btn-two" onClick={connectWallet}>
+              <button class="button btn btn-two" onClick={() => connectWallet()}>
                 <img
                   src="/images/icons/MetaMask_Fox.png"
                   // src="/images/icons/usdt.png"
