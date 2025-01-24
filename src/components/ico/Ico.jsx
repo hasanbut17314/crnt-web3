@@ -78,7 +78,7 @@ const Ico = () => {
   };
 
   const {
-    data: purchases,
+    data:  purchases = [],
     isError: purchaseError,
     isLoading: purchaseIsLoading,
   } = useContractRead({
@@ -88,7 +88,7 @@ const Ico = () => {
     args: [address],
     enabled: !!currentAccount,
   });
-
+   console.log(address,'address')
   console.log(purchases,'purchases')
   let originalStagePurchase =0;
 
@@ -97,17 +97,6 @@ const Ico = () => {
     userBalance = Number(originalStagePurchase);
   }
 
-  // const {
-  //   data: stagePurchases,
-  //   isError: stagePurchasesError,
-  //   isLoading: stagePurchasesIsLoading,
-  // } = useContractRead({
-  //   address: icoAddress,
-  //   abi: icoAbi,
-  //   functionName: "stagePurchases",
-  //   args: [currentAccount, userStage],
-  //   enabled: !!currentAccount,
-  // });
 
   const {
     data: buyToken,
@@ -131,48 +120,9 @@ const Ico = () => {
     functionName: "claimTokens",
   });
 
-  const {
-    data: lastClaimTimestamp,
-    isError: lastCliamError,
-    isLoading: lastClaimIsLoading,
-  } = useContractRead({
-    address: icoAddress,
-    abi: icoAbi,
-    functionName: "lastClaimTimestamp",
-    args: [currentAccount, userStage],
-    enabled: !!currentAccount,
-  });
-  let lastClaimTime = 0;
-  let lastClaimHour = 0;
-  let lastClaimMin = 0;
-  let lastClaimsec = 0;
-  let lastClaimday = 0;
+  
 
   let locked = false;
-
-  if (lastClaimTimestamp != 0) {
-    let timeDifference = 0;
-    lastClaimTime = Number(lastClaimTimestamp);
-    const currentTime = Math.floor(Date.now() / 1000);
-    timeDifference = currentTime - lastClaimTime;
-
-    lastClaimday = Math.floor(timeDifference / 86400);
-    lastClaimHour = Math.floor(timeDifference / 3600); // 1 hour = 3600 seconds
-    lastClaimMin = Math.floor((timeDifference % 3600) / 60); // Remaining minutes
-    lastClaimsec = timeDifference % 60; // Remaining seconds
-
-    if (timeDifference >= 30 * 24 * 60 * 60) {
-      locked = false; // Unlock the button
-    } else {
-      locked = true; // Keep the button locked
-    }
-  } else if (Number(originalStagePurchase) == 0) {
-    locked = false;
-    lastClaimday = 0;
-    lastClaimHour = 0;
-    lastClaimMin = 0;
-    lastClaimsec = 0;
-  }
 
   let crntAmount = 0;
 
@@ -287,7 +237,7 @@ const Ico = () => {
                   Total CRNT token in wallet:
                 </Form.Label>
                 <div className="col-5">
-                  <Form.Control type="text" placeholder="0 CRNT" value={purchases === undefined || purchaseIsLoading ? "0" : Number(purchases[0]) } readOnly />
+                  <Form.Control type="text" placeholder="0 CRNT" value={purchases.length ===0  || purchaseIsLoading ? "0" : Number(purchases[0]) } readOnly />
                 </div>
               </Form.Group>
               <Form.Group className="mb-3 row align-items-center">
@@ -307,13 +257,13 @@ const Ico = () => {
                   Locked token:
                 </Form.Label>
                 <div className="col-5">
-                  <Form.Control type="text" placeholder="0 CRNT" readOnly  value={purchases === undefined || purchaseIsLoading ? "0" : Number(purchases[1])}/>
+                  <Form.Control type="text" placeholder="0 CRNT" readOnly  value={purchases.length ===0  || purchaseIsLoading ? "0" : Number(purchases[1])}/>
                 </div>
               </Form.Group>
               <Form.Group className="mb-3 row align-items-center">
                 <Form.Label  className="col-7 col-form-label" >Ready to release token:</Form.Label>
                 <div className="col-5">
-                <Form.Control type="text" placeholder="0 CRNT" readOnly value={purchases === undefined || purchaseIsLoading ? "0" : Number(purchases[1])*(0.25)  } />
+                <Form.Control type="text" placeholder="0 CRNT" readOnly value={purchases.length ===0  || purchaseIsLoading ? "0" : Number(purchases[1])*(0.25)  } />
                 </div>
                 
               </Form.Group>

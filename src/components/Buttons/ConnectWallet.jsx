@@ -30,29 +30,41 @@ const ConnectWallet = (props) => {
 
   const [show, setShow] = useState(false);
 
-  const handleClose = () => {
+  const handleClose = async () => {
     setShow(false);
   };
+  
   const connectWallet = () => {
-    const metamaskConnector = connectors.find(
-      (connector) => connector.name === "MetaMask"
-    );
-    const phantomConnector = connectors.find(
-      (connector) => connector.name === "Phantom"
-    );
-    const walletConnectConnector = connectors.find(
-      (connector) => connector.name === "WalletConnect"
-    );
-
-    if (metamaskConnector) {
-      connect({ connector: metamaskConnector });
-    } else if (phantomConnector) {
-      connect({ connector: phantomConnector });
-    } else if (walletConnectConnector) {
-      connect({ connector: walletConnectConnector });
-    } else {
-      console.error("No wallet connector found");
+    try{
+      let metamaskConnector = connectors.find(
+          (connector) => connector.name === "MetaMask"
+      );
+      
+      const phantomConnector = connectors.find(
+        (connector) => connector.name === "Phantom"
+      );
+      const walletConnectConnector = connectors.find(
+        (connector) => connector.name === "WalletConnect"
+      );
+      // console.log(metamaskConnector,'metamaskConnector')
+      if (metamaskConnector) {
+        connect({ connector: metamaskConnector });
+  
+      }
+      
+      else if (phantomConnector) {
+        connect({ connector: phantomConnector });
+      } else if (walletConnectConnector) {
+        connect({ connector: walletConnectConnector });
+      } else {
+        console.error("No wallet connector found");
+      }
     }
+    catch(error){
+      console.error("Connection Error:", error);
+      alert('Please unlock your wallet first');
+    }
+
   };
 
   const handleShow = () => setShow(true);
