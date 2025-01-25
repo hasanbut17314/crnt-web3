@@ -128,11 +128,31 @@ const Ico = () => {
     }
   }, [buyTokenError]);
 
+  useEffect(() => {
+    if (claimTokenError) {
+      // Safely check if the error has a shortMessage property
+      const errorMessage = claimTokenError?.shortMessage || "";
+      
+      // Extract the message after 'reason:'
+      const updatedMessage = errorMessage.split("reason:")[1]?.trim();
+  
+      if (updatedMessage) {
+        // Show the extracted error message in an alert
+        window.alert(updatedMessage);
+      } else {
+        // Fallback if 'reason:' is not found
+        window.alert("An error occurred. Please try again.");
+      }
+    }
+  }, [claimTokenError]);
+
   const {
     data: claimToken,
     isLoadings: claimTokenLoading,
     isSuccess: claimTokenSuccess,
     write: writeClaimToken,
+    error: claimTokenError,
+
   } = useContractWrite({
     address: icoAddress,
     abi: icoAbi,

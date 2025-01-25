@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import Tabs from "./Tabs";
 import ToggleButton from "./ToggleButton";
@@ -72,11 +72,29 @@ const BuyNow = (props) => {
           pricepertoken = Number(pricepertoken)/1000000000000000000 
         }
 
-        const { data, isLoadings, isSuccess, write } = useContractWrite({
+        const { data, isLoadings, isSuccess, write,error:buytokenError } = useContractWrite({
           address: icoAddress,
           abi: icoAbi,
           functionName: 'buyTokens',
         });
+
+          useEffect(() => {
+            if (buytokenError) {
+              // Safely check if the error has a shortMessage property
+              const errorMessage = buytokenError?.shortMessage || "";
+              
+              // Extract the message after 'reason:'
+              const updatedMessage = errorMessage.split("reason:")[1]?.trim();
+          
+              if (updatedMessage) {
+                // Show the extracted error message in an alert
+                window.alert(updatedMessage);
+              } else {
+                // Fallback if 'reason:' is not found
+                window.alert("An error occurred. Please try again.");
+              }
+            }
+          }, [buytokenError]);
         
 
   const handleClose = () => {
