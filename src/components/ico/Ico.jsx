@@ -107,6 +107,8 @@ const Ico = () => {
     functionName: "buyTokens",
   });
 
+  console.log(buyToken,isLoadings,isSuccess,'buyToken')
+
   const {
     data: claimToken,
     isLoadings: claimTokenLoading,
@@ -172,9 +174,9 @@ const Ico = () => {
         console.error("Please connect your wallet before proceeding.");
         return;
       }
-
+    
       let stablecoinAddress = "0x55d398326f99059ff775485246999027b3197955";
-
+      console.log("writeBuyToken:1", writeBuyToken);
        writeBuyToken({
         args: [BigInt(dollarAmount), stablecoinAddress],
       });
