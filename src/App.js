@@ -37,20 +37,6 @@ const wagmiConfig = createConfig({
   
 });
 
-// const wagmiConfig = createConfig({
-//   autoConnect: true,
-//   connectors: w3mConnectors({ version: 1, chains, projectId }),
-//   publicClient,
-//   publicProvider: {
-//     headers: {
-//       'Access-Control-Allow-Origin': '*', // Allows all origins
-//       'Access-Control-Allow-Headers': '*', // Allows all headers
-//       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Allowed methods
-//     },
-//   },
-// });
-
-// 3. Configure modal ethereum client
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 function App() {

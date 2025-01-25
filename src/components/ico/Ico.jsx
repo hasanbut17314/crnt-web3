@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ico.css";
 import { icoAbi } from "../../utils/constants";
 import { icoAddress } from "../../utils/constants";
@@ -8,6 +8,8 @@ import {
   useContractWrite,
   useConnect,
   useAccount,
+  useContractEvent,
+
 } from "wagmi";
 import { IcoContext } from "../../contexts/context";
 import { flare } from "wagmi/chains";
@@ -101,13 +103,30 @@ const Ico = () => {
     isLoadings,
     isSuccess,
     write: writeBuyToken,
-  } = useContractWrite({
+    error: buyTokenError,
+  } =  useContractWrite({
     address: icoAddress,
     abi: icoAbi,
     functionName: "buyTokens",
   });
 
-  console.log(buyToken,isLoadings,isSuccess,'buyToken')
+  useEffect(() => {
+    if (buyTokenError) {
+      // Safely check if the error has a shortMessage property
+      const errorMessage = buyTokenError?.shortMessage || "";
+      
+      // Extract the message after 'reason:'
+      const updatedMessage = errorMessage.split("reason:")[1]?.trim();
+  
+      if (updatedMessage) {
+        // Show the extracted error message in an alert
+        window.alert(updatedMessage);
+      } else {
+        // Fallback if 'reason:' is not found
+        window.alert("An error occurred. Please try again.");
+      }
+    }
+  }, [buyTokenError]);
 
   const {
     data: claimToken,
@@ -176,11 +195,16 @@ const Ico = () => {
       }
     
       let stablecoinAddress = "0x55d398326f99059ff775485246999027b3197955";
-      console.log("writeBuyToken:1", writeBuyToken);
-       writeBuyToken({
+
+      const tx =   writeBuyToken({
         args: [BigInt(dollarAmount), stablecoinAddress],
       });
-      console.log("writeBuyToken:", writeBuyToken);
+
+  //  if(buyTokenError ){
+  //   let errorMessage = buyTokenError.shortMessage;
+  //   const updatedMessage = errorMessage.split('reason:')[1]?.trim();
+  //   window.alert(updatedMessage)
+  //  }
     } catch (err) {
       const errormessage = err.toString();
       console.log(errormessage);
