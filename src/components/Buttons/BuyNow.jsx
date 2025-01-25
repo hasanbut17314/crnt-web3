@@ -104,7 +104,8 @@ const BuyNow = (props) => {
       }
   
 
-      let stablecoinAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF"
+      // let stablecoinAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF"
+      let stablecoinAddress = "0x55d398326f99059ff775485246999027b3197955";
 
       write({
         args: [BigInt(dollarAmount), stablecoinAddress],

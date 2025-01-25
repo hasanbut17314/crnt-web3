@@ -88,8 +88,6 @@ const Ico = () => {
     args: [address],
     enabled: !!currentAccount,
   });
-   console.log(address,'address')
-  console.log(purchases,'purchases')
   let originalStagePurchase =0;
 
   let userBalance = 0;
@@ -180,6 +178,7 @@ const Ico = () => {
        writeBuyToken({
         args: [BigInt(dollarAmount), stablecoinAddress],
       });
+      console.log('inside write')
     } catch (err) {
       const errormessage = err.toString();
       console.log(errormessage);
