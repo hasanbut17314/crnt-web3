@@ -178,7 +178,7 @@ const Ico = () => {
        writeBuyToken({
         args: [BigInt(dollarAmount), stablecoinAddress],
       });
-      console.log('inside write')
+      console.log("writeBuyToken:", writeBuyToken);
     } catch (err) {
       const errormessage = err.toString();
       console.log(errormessage);
