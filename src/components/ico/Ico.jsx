@@ -110,6 +110,19 @@ const Ico = () => {
     functionName: "buyTokens",
   });
 
+  const {
+    data: claimToken,
+    isLoadings: claimTokenLoading,
+    isSuccess: claimTokenSuccess,
+    write: writeClaimToken,
+    error: claimTokenError,
+
+  } = useContractWrite({
+    address: icoAddress,
+    abi: icoAbi,
+    functionName: "claimTokens",
+  });
+
   useEffect(() => {
     if (buyTokenError) {
       // Safely check if the error has a shortMessage property
@@ -146,18 +159,7 @@ const Ico = () => {
     }
   }, [claimTokenError]);
 
-  const {
-    data: claimToken,
-    isLoadings: claimTokenLoading,
-    isSuccess: claimTokenSuccess,
-    write: writeClaimToken,
-    error: claimTokenError,
-
-  } = useContractWrite({
-    address: icoAddress,
-    abi: icoAbi,
-    functionName: "claimTokens",
-  });
+ 
 
   
 

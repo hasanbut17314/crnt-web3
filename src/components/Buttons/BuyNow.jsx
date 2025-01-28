@@ -16,7 +16,7 @@ import { useContractRead,useContractWrite,useConnect, useAccount } from 'wagmi'
 
 import "react-toastify/dist/ReactToastify.css";
 // import { icoAbi, icoAddress } from "../../utils/constants";
-import { useEffect } from "react";
+
 import LoadingOverlay from "react-loading-overlay";
 import { Link } from "react-router-dom";
 import IcoAbi from '../../contractabi/ICO.json'
