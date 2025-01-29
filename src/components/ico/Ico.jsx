@@ -4,11 +4,13 @@ import { icoAbi } from "../../utils/constants";
 import { icoAddress } from "../../utils/constants";
 import { useContext } from "react";
 import {
-  useContractRead,
-  useContractWrite,
+   BaseError,
+   useReadContract,
+  useWriteContract,
   useConnect,
   useAccount,
   useContractEvent,
+
 
 } from "wagmi";
 import { IcoContext } from "../../contexts/context";
@@ -25,28 +27,22 @@ const Ico = () => {
   const { connectWallet, currentAccount } = useContext(IcoContext);
   const [userStage, setUserStage] = useState(0);
   const [claimStage, setClaimStage] = useState(0);
+  // const { data: hash, writeContract } = useWriteContract()
 
   const handleClaimChange = (e) => {
     setClaimStage(e.target.value);
   };
-
-  // console.log(claimStage,'claimStage')
-
-  // console.log(currentAccount,'currentAccount')
-
   const [tokens, setTokens] = useState(0);
   const tokenRate = 0.01;
 
   const { connect, connectors } = useConnect();
   const { isConnected, address } = useAccount();
 
-  // console.log(address, "address");
-
   const {
     data: currentStageData,
     isError: isCurrentStageError,
     isLoading: isCurrentStageLoading,
-  } = useContractRead({
+  } = useReadContract({
     address: icoAddress,
     abi: icoAbi,
     functionName: "currentStage",
@@ -56,7 +52,7 @@ const Ico = () => {
     data: stageDetailsData,
     isError: isStageDetailsError,
     isLoading: isStageDetailsLoading,
-  } = useContractRead({
+  } = useReadContract({
     address: icoAddress,
     abi: icoAbi,
     functionName: "stages",
@@ -83,7 +79,7 @@ const Ico = () => {
     data:  purchases = [],
     isError: purchaseError,
     isLoading: purchaseIsLoading,
-  } = useContractRead({
+  } = useReadContract({
     address: icoAddress,
     abi: icoAbi,
     functionName: "purchases",
@@ -97,36 +93,16 @@ const Ico = () => {
     userBalance = Number(originalStagePurchase);
   }
 
+  const { 
+    data: hash, 
+    isPending,
+    writeContract ,
+    error:errorExample
+  } = useWriteContract() 
 
-  const {
-    data: buyToken,
-    isLoadings,
-    isSuccess,
-    write: writeBuyToken,
-    error: buyTokenError,
-  } =  useContractWrite({
-    address: icoAddress,
-    abi: icoAbi,
-    functionName: "buyTokens",
-  });
-
-  const {
-    data: claimToken,
-    isLoadings: claimTokenLoading,
-    isSuccess: claimTokenSuccess,
-    write: writeClaimToken,
-    error: claimTokenError,
-
-  } = useContractWrite({
-    address: icoAddress,
-    abi: icoAbi,
-    functionName: "claimTokens",
-  });
-
-  useEffect(() => {
-    if (buyTokenError) {
-      // Safely check if the error has a shortMessage property
-      const errorMessage = buyTokenError?.shortMessage || "";
+  useEffect(() => { 
+    if (errorExample) {
+      const errorMessage = errorExample?.shortMessage || "";
       
       // Extract the message after 'reason:'
       const updatedMessage = errorMessage.split("reason:")[1]?.trim();
@@ -136,32 +112,12 @@ const Ico = () => {
         window.alert(updatedMessage);
       } else {
         // Fallback if 'reason:' is not found
-        window.alert("An error occurred. Please try again.");
+        
+        // window.alert("An error occurred. Please try again.");
+        console.log(errorMessage,'errorMessage')
       }
     }
-  }, [buyTokenError]);
-
-  useEffect(() => {
-    if (claimTokenError) {
-      // Safely check if the error has a shortMessage property
-      const errorMessage = claimTokenError?.shortMessage || "";
-      
-      // Extract the message after 'reason:'
-      const updatedMessage = errorMessage.split("reason:")[1]?.trim();
-  
-      if (updatedMessage) {
-        // Show the extracted error message in an alert
-        window.alert(updatedMessage);
-      } else {
-        // Fallback if 'reason:' is not found
-        window.alert("An error occurred. Please try again.");
-      }
-    }
-  }, [claimTokenError]);
-
- 
-
-  
+  }, [errorExample]);
 
   let locked = false;
 
@@ -183,9 +139,14 @@ const Ico = () => {
         console.log("please connect your metamast");
         return;
       }
-      writeClaimToken({
+
+      writeContract({
+        address:icoAddress,
+        abi:icoAbi,
+        functionName: 'claimTokens',
         args: [claimStage],
-      });
+      })
+
     } catch (err) {
       console.log(err, "error during claiming");
       const errormessage = err.toString();
@@ -217,10 +178,16 @@ const Ico = () => {
       }
     
       let stablecoinAddress = "0x55d398326f99059ff775485246999027b3197955";
-
-      const tx =   writeBuyToken({
+      writeContract({
+        address:icoAddress,
+        abi:icoAbi,
+        functionName: 'buyTokens',
         args: [BigInt(dollarAmount), stablecoinAddress],
-      });
+      })
+
+   
+
+     
 
   //  if(buyTokenError ){
   //   let errorMessage = buyTokenError.shortMessage;

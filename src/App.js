@@ -1,23 +1,23 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import { useEffect, useState } from "react";
-import WOW from "wow.js";
+// import WOW from "wow.js";
 import HomeTwo from "./pages/Home/HomeTwo";
 import Blog from "./pages/Blog/Blog";
 import BlogDetailsPage from "./pages/BlogDetails/BlogDetailsPage";
 import LoadingOverlay from "react-loading-overlay";
 // import { IcoContext } from "./contexts/context";
 import { useContext } from "react";
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ProjectId } from "./utils/constants";
 
-import {
-  EthereumClient,
-  w3mConnectors,
-  w3mProvider,
-} from "@web3modal/ethereum";
-import { Web3Modal } from "@web3modal/react";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
+// import {
+//   EthereumClient,
+//   w3mConnectors,
+//   w3mProvider,
+// } from "@web3modal/ethereum";
+// import { Web3Modal } from "@web3modal/react";
+import { http, createConfig,WagmiProvider } from "wagmi";
 import { bsc,mainnet,sepolia } from "wagmi/chains";
 import Terms from "./pages/t&c/t&c";
 import Privacy from './pages/p&p/p&p';
@@ -26,18 +26,29 @@ import Regulatory from './pages/R&S/r&s'
 
 const chains = [bsc];
 const projectId = ProjectId;
-
-const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
+const queryClient = new QueryClient()
 
 
 const wagmiConfig = createConfig({
   autoConnect: false,
-  connectors: w3mConnectors({ version: 1, chains, projectId }),
-  publicClient,
-  
-});
+  chains: [bsc],
+  transports: {
+    [bsc.id]: http(),
+  },
+})
 
-const ethereumClient = new EthereumClient(wagmiConfig, chains);
+
+// const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
+
+
+// const wagmiConfig = createConfig({
+//   autoConnect: false,
+//   connectors: w3mConnectors({ version: 1, chains, projectId }),
+//   publicClient,
+  
+// });
+
+// const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 function App() {
   // const { isLoading } = useContext(IcoContext);
@@ -50,7 +61,8 @@ function App() {
 
   return (
     <>
-      <WagmiConfig config={wagmiConfig}>
+      <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
         <Routes>
           {/* <Route path="/home-two" element={<Home />} /> */}
           <Route path="/" element={<HomeTwo />} />
@@ -60,8 +72,9 @@ function App() {
           <Route path="regulatory-and-statements" element={<Regulatory/>} />
           {/* <Route path="blog-details" element={<BlogDetailsPage />} /> */}
         </Routes>
-      </WagmiConfig>
-      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+        </QueryClientProvider>
+      </WagmiProvider>
+       {/* <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />  */}
     </>
   );
 }

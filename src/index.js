@@ -14,12 +14,11 @@ import { IcoProvider } from "./contexts/context";
 // import { ToastContainer } from "react-bootstrap";
 
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <IcoProvider>
-    {/* <ToastContainer /> */}
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </IcoProvider>,
-  document.getElementById("root")
+  </IcoProvider>
 );

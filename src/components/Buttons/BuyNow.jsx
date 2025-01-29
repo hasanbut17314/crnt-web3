@@ -12,7 +12,9 @@ import { IcoContext } from "../../contexts/context";
 
 import { icoAbi } from "../../utils/constants";
 import { icoAddress } from "../../utils/constants";
-import { useContractRead,useContractWrite,useConnect, useAccount } from 'wagmi'
+import { BaseError,
+  useReadContract,
+ useWriteContract,useConnect, useAccount } from 'wagmi'
 
 import "react-toastify/dist/ReactToastify.css";
 // import { icoAbi, icoAddress } from "../../utils/constants";
@@ -49,7 +51,7 @@ const BuyNow = (props) => {
         data: currentStageData,
         isError: isCurrentStageError,
         isLoading: isCurrentStageLoading,
-      } = useContractRead({
+      } = useReadContract({
         address: icoAddress,
         abi: icoAbi,
         functionName: "currentStage",
@@ -59,7 +61,7 @@ const BuyNow = (props) => {
           data: stageDetailsData,
           isError: isStageDetailsError,
           isLoading: isStageDetailsLoading,
-        } = useContractRead({
+        } = useReadContract({
           address: icoAddress,
           abi: icoAbi,
           functionName: "stages",
@@ -72,16 +74,23 @@ const BuyNow = (props) => {
           pricepertoken = Number(pricepertoken)/1000000000000000000 
         }
 
-        const { data, isLoadings, isSuccess, write,error:buytokenError } = useContractWrite({
-          address: icoAddress,
-          abi: icoAbi,
-          functionName: 'buyTokens',
-        });
+        const { 
+            data: hash, 
+            isPending,
+            writeContract ,
+            error:errorExample
+          } = useWriteContract() 
+
+        // const { data, isLoadings, isSuccess, write,error:buytokenError } = useContractWrite({
+        //   address: icoAddress,
+        //   abi: icoAbi,
+        //   functionName: 'buyTokens',
+        // });
 
           useEffect(() => {
-            if (buytokenError) {
+            if (errorExample) {
               // Safely check if the error has a shortMessage property
-              const errorMessage = buytokenError?.shortMessage || "";
+              const errorMessage = errorExample?.shortMessage || "";
               
               // Extract the message after 'reason:'
               const updatedMessage = errorMessage.split("reason:")[1]?.trim();
@@ -91,10 +100,10 @@ const BuyNow = (props) => {
                 window.alert(updatedMessage);
               } else {
                 // Fallback if 'reason:' is not found
-                window.alert("An error occurred. Please try again.");
+                // window.alert("An error occurred. Please try again.");
               }
             }
-          }, [buytokenError]);
+          }, [errorExample]);
         
 
   const handleClose = () => {
@@ -123,11 +132,18 @@ const BuyNow = (props) => {
   
 
       // let stablecoinAddress = "0xC19b41ea237Aa3f874971911c3b1580B1d1A9eDF"
-      let stablecoinAddress = "0x55d398326f99059ff775485246999027b3197955";
+      // let stablecoinAddress = "0x55d398326f99059ff775485246999027b3197955";
 
-      write({
-        args: [BigInt(dollarAmount), stablecoinAddress],
-      });
+      // write({
+      //   args: [BigInt(dollarAmount), stablecoinAddress],
+      // });
+      let stablecoinAddress = "0x55d398326f99059ff775485246999027b3197955";
+            writeContract({
+              address:icoAddress,
+              abi:icoAbi,
+              functionName: 'buyTokens',
+              args: [BigInt(dollarAmount), stablecoinAddress],
+            })
       
     } catch (err) {
       const errormessage = err.toString();

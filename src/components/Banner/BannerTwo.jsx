@@ -47,6 +47,9 @@ const BannerTwo = () => {
     functionName: "stages",
     args: [`${currentStageData}`], // Pass currentStage only when available
   });
+  
+
+  let tokenRaised;
 
 
   
@@ -55,6 +58,8 @@ const BannerTwo = () => {
   if (stageDetailsData) {
     pricepertoken = stageDetailsData[1];
     pricepertoken = Number(pricepertoken) / 1000000000000000000
+    tokenRaised = stageDetailsData[5]
+    tokenRaised= Number(tokenRaised)/1000000000000000000
   }
 
   //   console.log(typeof(currentStageData),'type of current stage')
@@ -265,7 +270,7 @@ const BannerTwo = () => {
                       />
                     </div>
                     <h4 className="target-banner title text-uppercase">
-                      {totalRagetRaised} Target Raised
+                      {tokenRaised} Target Raised
                       <span
                         style={{
                           color: `${colorScales[currentStage]}`,
