@@ -263,6 +263,23 @@ const Ico = () => {
                     <option value="0">Stage 1</option>
                     <option value="1">Stage 2</option>
                     <option value="2">Stage 3</option>
+                    <option value="3">Stage 4</option>
+                    <option value="4">Stage 5</option>
+                    <option value="5">Stage 6</option>
+                    <option value="6">Stage 7</option>
+                    <option value="7">Stage 8</option>
+                    <option value="8">Stage 9</option>
+                    <option value="9">Stage 10</option>
+                    <option value="10">Stage 11</option>
+                    <option value="11">Stage 12</option>
+                    <option value="12">Stage 13</option>
+                    <option value="13">Stage 14</option>
+                    <option value="14">Stage 15</option>
+                    <option value="15">Stage 16</option>
+                    <option value="16">Stage 17</option>
+                    <option value="17">Stage 18</option>
+                    <option value="18">Stage 19</option>
+                    <option value="19">Stage 20</option>
                   </Form.Select>
                 </div>
               </Form.Group>
